@@ -10,6 +10,11 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.animation.KeyFrame;
 
+enum SwitchType {
+//   todo
+
+}
+
 /**
  *
  * @author sebastiankotarski
@@ -39,7 +44,6 @@ public class SwitchLoop {
     public void handle(ActionEvent actionEvent) {
         // recalculate packets
         handler.updateUI(); // update UI
-
     }
 
     public boolean isRunning() {
