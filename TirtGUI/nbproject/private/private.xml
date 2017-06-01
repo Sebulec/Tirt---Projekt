@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/sebastiankotarski/Documents/Studia/teleinfa/TirtGUI/src/tirtgui/SwitchLoop.java</file>
-            <file>file:/Users/sebastiankotarski/Documents/Studia/teleinfa/TirtGUI/src/tirtgui/FXMLDocumentController.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/sources/DeterministicDestinationPacketSource.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/tirtgui/InputPortModel.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/tirtgui/OutputPortModel.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/sources/RandomPacketSource.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/destinations/ProbabilisticPacketDestination.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/tirtgui/TirtGUI.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/hardware/Switch.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/tirtgui/SwitchLoop.java</file>
+            <file>file:/Developer/Tirt_P/TirtGUI/src/tirtgui/FXMLDocumentController.java</file>
         </group>
     </open-files>
 </project-private>

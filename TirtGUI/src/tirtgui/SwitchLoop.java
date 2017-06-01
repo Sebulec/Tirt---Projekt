@@ -5,14 +5,17 @@
  */
 package tirtgui;
 
+import hardware.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.animation.KeyFrame;
 
 enum SwitchType {
-//   todo
-
+    Type1, Type2, Type3
 }
 
 /**
@@ -24,6 +27,7 @@ public class SwitchLoop {
     private static Duration PROBE_FREQUENCY;
     private final Timeline timeline;
     public Handler handler;
+    public Switch switchEntity;
 
     public SwitchLoop(long probeDuration) {
         PROBE_FREQUENCY = Duration.seconds(probeDuration);
@@ -39,6 +43,29 @@ public class SwitchLoop {
         );
         timeline.setDelay(PROBE_FREQUENCY);
         timeline.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    public void configureSwitch(int cellSize, SwitchType switchType, HashMap options) {
+        switch (switchType) {
+            case Type1:
+                // type 1
+                ArrayList<IPacketSource> sources = new ArrayList<>();
+                sources.addAll((Collection<? extends IPacketSource>) options.get("sources"));
+
+                int inputQueuesSizes[] = (int[]) options.get("inputQueuesSizes");
+
+                ArrayList<APacketDestination> destinations = new ArrayList<>();
+                destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
+
+                this.switchEntity = new Switch(cellSize, sources, destinations, inputQueuesSizes);
+                break;
+            case Type2:
+                // type 2
+                break;
+            default:
+                // type 3
+                break;
+        }
     }
 
     public void handle(ActionEvent actionEvent) {

@@ -5,56 +5,32 @@
  */
 package tirtgui;
 
+import hardware.APacketDestination;
+import hardware.IPacketSource;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
+import java.util.function.Function;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory;
-
-class InputPortModel {
-
-    String name;
-    Double value;
-
-    public InputPortModel(String name) {
-        this.name = name;
-    }
-
-    public InputPortModel(String name, Double value) {
-        this.name = name;
-        this.value = value;
-    }
-}
-
-class OutputPortModel {
-
-    String name;
-    Double value;
-
-    public OutputPortModel(String name) {
-        this.name = name;
-    }
-
-    public OutputPortModel(String name, Double value) {
-        this.name = name;
-        this.value = value;
-    }
-}
+import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 
 /**
  *
@@ -64,8 +40,8 @@ public class FXMLDocumentController implements Initializable {
 
     SwitchLoop switchLoop; // instance of switch loop, not launched yet
     ChartProvider chartProvider;
-    ObservableList<InputPortModel> inputPortModels;
-    ObservableList<OutputPortModel> outputPortModels;
+    ObservableList<InputPortModel> inputPortModels = FXCollections.observableArrayList();
+    ObservableList<OutputPortModel> outputPortModels = FXCollections.observableArrayList();
 
     long numberOfIterations = 0;
     @FXML
@@ -73,11 +49,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button startButton;
     @FXML
-    private ChoiceBox switchTypeCombo;
+    private ChoiceBox<SwitchType> switchTypeCombo;
     @FXML
     private Spinner<Double> inputSpinner;
     @FXML
-    private Spinner<Double> outputSpinner;
+    private Spinner<Integer> outputSpinner;
     @FXML
     LineChart<String, Number> lineChart1;
     @FXML
@@ -86,18 +62,56 @@ public class FXMLDocumentController implements Initializable {
     private ListView<InputPortModel> inputParamsListView;
     @FXML
     private ListView<OutputPortModel> outputParamsListView;
+    @FXML
+    private Spinner<Integer> cellSize;
+    @FXML
+    private ComboBox<String> packetTypeCombo;
+    @FXML
+    private Spinner<Integer> packetMinimalSizeSpinner;
+    @FXML
+    private Spinner<Integer> packetMaximalSizeSpinner;
+    @FXML
+    private Spinner<Double> probabilityOfBusinessSpinner;
+    @FXML
+    private Group inputsGroup;
+    @FXML
+    private Group outputsGroup;
+    @FXML
+    private ComboBox<OutputPortModel> outputComboBox; // todo
 
     @FXML
     private void startButtonAction(ActionEvent event) {
         if (switchLoop.isRunning()) {
             startButton.setText("Start");
+            inputsGroup.setDisable(false);
+            outputsGroup.setDisable(false);
+            switchTypeCombo.setDisable(false);
+            cellSize.setDisable(false);
             switchLoop.stop();
         } else {
             startButton.setText("Stop");
+            inputsGroup.setDisable(true);
+            outputsGroup.setDisable(true);
+            switchTypeCombo.setDisable(true);
+            cellSize.setDisable(true);
             updateViews();
             resetButton.setDisable(false);
             switchLoop.start();
         }
+    }
+
+    public void prepareValues() {
+        SwitchType switchType = switchTypeCombo.getValue();
+        int cellSizeValue = this.cellSize.getValue();
+        ArrayList<IPacketSource> sources = new ArrayList<>();
+        ArrayList<APacketDestination> destinations = new ArrayList<>();
+        inputPortModels.forEach((inputPortModel) -> {
+            sources.add(inputPortModel.makePacketSource());
+        });
+        outputPortModels.forEach((outputPortModel) -> {
+            destinations.add(outputPortModel.makeDestinationPacket());
+        });
+
     }
 
     @Override
@@ -115,21 +129,48 @@ public class FXMLDocumentController implements Initializable {
         configureCharts();
     }
 
-    @FXML
-    private void addInputClicked(ActionEvent event) {
-        Double value = this.inputSpinner.getValue();
-        String name = "asda";
-        InputPortModel inputPortModel = new InputPortModel(name, value);
-        this.inputPortModels.add(inputPortModel);
+    private InputPortModel makeInputPortFromFields() {
+        double probabilityOfPacketArrival = this.inputSpinner.getValue();
+        int packetMinimalSize = this.packetMinimalSizeSpinner.getValue();
+        int packetMaximalSize = this.packetMaximalSizeSpinner.getValue();
+        int outId = -1;
+        if (!this.outputComboBox.isDisabled()) {
+            outId = this.outputComboBox.getSelectionModel().getSelectedIndex();
+        }
+        return new InputPortModel(probabilityOfPacketArrival, packetMinimalSize, packetMaximalSize, outId);
+    }
+
+    private OutputPortModel makeOutputPortFromFields() {
+        double probabilityOfBusiness = this.probabilityOfBusinessSpinner.getValue();
+        int capacity = this.outputSpinner.getValue();
+        return new OutputPortModel(capacity, probabilityOfBusiness);
+    }
+
+    private void clearInputPorts() {
         this.inputSpinner.getValueFactory().setValue(0.01);
+        this.packetMaximalSizeSpinner.getValueFactory().setValue(1);
+        this.packetMinimalSizeSpinner.getValueFactory().setValue(1);
+    }
+
+    private void clearOutputPorts() {
+        this.outputSpinner.getValueFactory().setValue(1);
+        this.probabilityOfBusinessSpinner.getValueFactory().setValue(0.5);
+    }
+
+    @FXML
+
+    private void addInputClicked(ActionEvent event) {
+        InputPortModel inputPortModel = makeInputPortFromFields();
+        clearInputPorts();
+        this.inputPortModels.add(inputPortModel);
+        this.inputParamsListView.setItems(inputPortModels);
     }
 
     @FXML
     private void editInputClicked(ActionEvent event) {
-        InputPortModel inputPortModel = this.inputParamsListView.getSelectionModel().getSelectedItem();
+        InputPortModel inputPortModel;
         int selectedIndex = this.inputParamsListView.getSelectionModel().getSelectedIndex();
-        Double value = this.inputSpinner.getValue();
-        inputPortModel.value = value;
+        inputPortModel = makeInputPortFromFields();
         inputPortModels.set(selectedIndex, inputPortModel);
         inputParamsListView.setItems(inputPortModels);
         this.inputSpinner.getValueFactory().setValue(0.01);
@@ -139,42 +180,49 @@ public class FXMLDocumentController implements Initializable {
     private void removeInputClicked(ActionEvent event) {
         InputPortModel inputPortModel = this.inputParamsListView.getSelectionModel().getSelectedItem();
         this.inputPortModels.remove(inputPortModel);
-        this.inputSpinner.getValueFactory().setValue(0.01);
+        clearInputPorts();
     }
 
-    private void didSelectInput(InputPortModel inputPort) {
-        this.inputSpinner.getValueFactory().setValue(inputPort.value);
+    private void didSelectInput(InputPortModel inputPortModel) {
+        this.inputSpinner.getValueFactory().setValue(inputPortModel.probabilityOfPacketArrival);
+        this.packetMinimalSizeSpinner.getValueFactory().setValue(inputPortModel.packetMinimalSize);
+        this.packetMaximalSizeSpinner.getValueFactory().setValue(inputPortModel.packetMaximalSize);
+        this.packetTypeCombo.setValue(inputPortModel.outId != -1 ? "Wybrany output" : "Losowy output");
+        if (inputPortModel.outId != -1) {
+            // todo
+            this.outputComboBox.setDisable(false);
+        } else {
+            this.outputComboBox.setDisable(true);
+        }
     }
 
     private void didSelectOutput(OutputPortModel outputPortModel) {
-        this.outputSpinner.getValueFactory().setValue(outputPortModel.value);
+        this.probabilityOfBusinessSpinner.getValueFactory().setValue(outputPortModel.probabilityOfBusiness);
+        this.outputSpinner.getValueFactory().setValue(outputPortModel.capacity);
     }
 
     @FXML
     private void addOutputClicked(ActionEvent event) {
-        Double value = this.outputSpinner.getValue();
-        String name = "asda";
-        OutputPortModel outputPortModel = new OutputPortModel(name, value);
+        OutputPortModel outputPortModel = makeOutputPortFromFields();
         this.outputPortModels.add(outputPortModel);
-        this.outputSpinner.getValueFactory().setValue(1.);
+        this.outputParamsListView.setItems(outputPortModels);
+        clearOutputPorts();
     }
 
     @FXML
     private void editOutputClicked(ActionEvent event) {
-        OutputPortModel outputPortModel = this.outputParamsListView.getSelectionModel().getSelectedItem();
+        OutputPortModel outputPortModel;
         int selectedIndex = this.outputParamsListView.getSelectionModel().getSelectedIndex();
-        Double value = this.outputSpinner.getValue();
-        outputPortModel.value = value;
+        outputPortModel = makeOutputPortFromFields();
         outputPortModels.set(selectedIndex, outputPortModel);
         outputParamsListView.setItems(outputPortModels);
-        this.outputSpinner.getValueFactory().setValue(1.);
     }
 
     @FXML
     private void removeOutputClicked(ActionEvent event) {
         OutputPortModel outputPortModel = this.outputParamsListView.getSelectionModel().getSelectedItem();
         this.outputPortModels.remove(outputPortModel);
-        this.outputSpinner.getValueFactory().setValue(1.);
+        clearOutputPorts();
     }
 
     public void updateViews() {
@@ -208,15 +256,33 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void setupViews() {
+
+        this.packetTypeCombo.setItems(FXCollections.observableArrayList("Losowy output", "Wybrany output"));
+        this.packetTypeCombo.setValue("Losowy output");
+        this.packetTypeCombo.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            this.outputComboBox.setDisable(!newValue.equals("Wybrany output"));
+            this.outputComboBox.setItems(this.outputParamsListView.getItems());
+        });
+
+        IntegerSpinnerValueFactory integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        this.cellSize.setValueFactory(integerSpinnerValueFactory);
+        integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        packetMinimalSizeSpinner.setValueFactory(integerSpinnerValueFactory);
+        integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        packetMaximalSizeSpinner.setValueFactory(integerSpinnerValueFactory);
+
+        this.switchTypeCombo.setItems(FXCollections.observableArrayList(SwitchType.values()));
+        this.switchTypeCombo.getSelectionModel().selectFirst();
+
         this.inputSpinner.setEditable(true);
         DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.01, 1, 0.5);
         valueFactory.setAmountToStepBy(0.01);
         this.inputSpinner.setValueFactory(valueFactory);
-        this.inputPortModels = FXCollections.observableArrayList(
-                new InputPortModel("input1", 0.55),
-                new InputPortModel("input2", 0.3)
-        );
-        this.inputParamsListView.setItems(this.inputPortModels);
+
+        valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.01, 1, 0.5);
+        valueFactory.setAmountToStepBy(0.01);
+        probabilityOfBusinessSpinner.setValueFactory(valueFactory);
+
         this.inputParamsListView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends InputPortModel> observable, InputPortModel oldValue, InputPortModel newValue) -> {
             if (newValue != null) {
                 this.didSelectInput(newValue);
@@ -224,13 +290,8 @@ public class FXMLDocumentController implements Initializable {
         });
 
         this.outputSpinner.setEditable(true);
-        valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(1, Double.MAX_VALUE, 100);
-        valueFactory.setAmountToStepBy(1);
-        this.outputSpinner.setValueFactory(valueFactory);
-        this.outputPortModels = FXCollections.observableArrayList(
-                new OutputPortModel("input1", 55.),
-                new OutputPortModel("input2", 3.)
-        );
+        integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        this.outputSpinner.setValueFactory(integerSpinnerValueFactory);
         this.outputParamsListView.setItems(this.outputPortModels);
         this.outputParamsListView.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends OutputPortModel> observable, OutputPortModel oldValue, OutputPortModel newValue) -> {
             if (newValue != null) {
