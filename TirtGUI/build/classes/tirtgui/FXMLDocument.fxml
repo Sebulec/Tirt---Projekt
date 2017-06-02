@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -68,7 +69,7 @@
       <ToolBar prefHeight="39.0" prefWidth="747.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <items>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Typ Switcha" />
-            <ChoiceBox id="algorithmCombo" fx:id="switchTypeCombo" prefHeight="27.0" prefWidth="111.0" />
+            <ChoiceBox id="algorithmCombo" fx:id="switchTypeCombo" prefHeight="27.0" prefWidth="184.0" />
             <Label fx:id="numberOfIterationsLabel" text="Liczba iteracji:" />
         </items>
       </ToolBar>
@@ -91,8 +92,8 @@
             <ToolBar layoutX="7.0" layoutY="248.0" orientation="VERTICAL" prefHeight="300.0" prefWidth="199.0">
                <items>
                   <Label prefHeight="34.0" prefWidth="190.0" text="P-stwo pojawienia się pakietu" />
-                  <Spinner fx:id="inputSpinner" editable="true" />
-                  <ComboBox fx:id="packetTypeCombo" prefHeight="27.0" prefWidth="193.0" promptText="Typ pakietu" />
+                  <Spinner fx:id="inputSpinner" editable="true" prefHeight="27.0" prefWidth="186.0" />
+                  <ComboBox fx:id="packetTypeCombo" prefHeight="27.0" prefWidth="187.0" promptText="Typ pakietu" />
                   <ToolBar orientation="VERTICAL" prefHeight="106.0" prefWidth="194.0">
                      <items>
                         <HBox alignment="CENTER">
@@ -114,6 +115,12 @@
                         </HBox>
                      </items>
                   </ToolBar>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="Rozmiar kolejki:" />
+                        <Spinner fx:id="inputQueueSizeSpinner" prefHeight="27.0" prefWidth="83.0" />
+                     </children>
+                  </HBox>
                   <ToolBar>
                      <items>
                         <Button mnemonicParsing="false" onAction="#addInputClicked" text="Dodaj" />
@@ -129,12 +136,18 @@
          <children>
             <ListView fx:id="outputParamsListView" layoutY="29.0" prefHeight="219.0" prefWidth="218.0" />
             <Label layoutX="3.0" prefHeight="24.0" prefWidth="209.0" text="Porty wyjściowe" textAlignment="CENTER" />
-            <ToolBar layoutX="4.0" layoutY="248.0" orientation="VERTICAL" prefHeight="196.0" prefWidth="202.0">
+            <ToolBar layoutX="4.0" layoutY="248.0" orientation="VERTICAL" prefHeight="222.0" prefWidth="218.0">
                <items>
                   <Label prefHeight="34.0" prefWidth="206.0" text="Przepustowość łącza " />
                   <Spinner fx:id="outputSpinner" editable="true" prefHeight="27.0" prefWidth="190.0" />
                   <Label prefHeight="34.0" prefWidth="190.0" text="P-stwo obciążenia" />
-                  <Spinner fx:id="probabilityOfBusinessSpinner" editable="true" />
+                  <Spinner fx:id="probabilityOfBusinessSpinner" editable="true" prefHeight="27.0" prefWidth="193.0" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="105.0" text="Rozmiar kolejki:" />
+                        <Spinner fx:id="outputQueueSizeSpinner" prefHeight="27.0" prefWidth="76.0" />
+                     </children>
+                  </HBox>
                   <ToolBar prefHeight="39.0" prefWidth="193.0">
                      <items>
                         <Button mnemonicParsing="false" onAction="#addOutputClicked" text="Dodaj" />
@@ -143,6 +156,9 @@
                      </items>
                   </ToolBar>
                </items>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </ToolBar>
          </children>
       </Group>

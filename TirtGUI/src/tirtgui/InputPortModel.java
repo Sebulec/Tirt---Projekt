@@ -20,11 +20,14 @@ public class InputPortModel {
     int packetMaximalSize;
     int outId;
 
-    public InputPortModel(double probabilityOfPacketArrival, int packetMinimalSize, int packetMaximalSize, int outId) {
+    int queueSize;
+
+    public InputPortModel(double probabilityOfPacketArrival, int packetMinimalSize, int packetMaximalSize, int outId, int queueSize) {
         this.probabilityOfPacketArrival = probabilityOfPacketArrival;
         this.packetMinimalSize = packetMinimalSize;
         this.packetMaximalSize = packetMaximalSize;
         this.outId = outId;
+        this.queueSize = queueSize;
     }
 
     public IPacketSource makePacketSource() {
@@ -33,5 +36,9 @@ public class InputPortModel {
         } else {
             return new DeterministicDestinationPacketSource(probabilityOfPacketArrival, packetMinimalSize, packetMaximalSize, outId);
         }
+    }
+
+    public int getQueueSize() {
+        return queueSize;
     }
 }

@@ -17,9 +17,12 @@ public class OutputPortModel {
     int capacity;
     double probabilityOfBusiness;
 
-    public OutputPortModel(int capacity, double probabilityOfBusiness) {
+    int queueSize;
+
+    public OutputPortModel(int capacity, double probabilityOfBusiness, int queueSize) {
         this.capacity = capacity;
         this.probabilityOfBusiness = probabilityOfBusiness;
+        this.queueSize = queueSize;
     }
 
     public APacketDestination makeDestinationPacket() {

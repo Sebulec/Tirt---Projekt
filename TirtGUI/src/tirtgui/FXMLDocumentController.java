@@ -9,8 +9,8 @@ import hardware.APacketDestination;
 import hardware.IPacketSource;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -77,6 +77,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Group outputsGroup;
     @FXML
+    private Spinner<Integer> inputQueueSizeSpinner;
+    @FXML
+    private Spinner<Integer> outputQueueSizeSpinner;
+    @FXML
     private ComboBox<OutputPortModel> outputComboBox; // todo
 
     @FXML
@@ -94,6 +98,7 @@ public class FXMLDocumentController implements Initializable {
             outputsGroup.setDisable(true);
             switchTypeCombo.setDisable(true);
             cellSize.setDisable(true);
+            prepareValues();
             updateViews();
             resetButton.setDisable(false);
             switchLoop.start();
@@ -105,13 +110,22 @@ public class FXMLDocumentController implements Initializable {
         int cellSizeValue = this.cellSize.getValue();
         ArrayList<IPacketSource> sources = new ArrayList<>();
         ArrayList<APacketDestination> destinations = new ArrayList<>();
+        ArrayList<Integer> inputQueuesSizes = new ArrayList<>(inputPortModels.size());
+        ArrayList<Integer> outputQueuesSizes = new ArrayList<>(outputPortModels.size());
         inputPortModels.forEach((inputPortModel) -> {
             sources.add(inputPortModel.makePacketSource());
+            inputQueuesSizes.add(inputPortModel.getQueueSize());
         });
         outputPortModels.forEach((outputPortModel) -> {
             destinations.add(outputPortModel.makeDestinationPacket());
+            outputQueuesSizes.add(outputPortModel.queueSize);
         });
-
+        HashMap options = new HashMap();
+        options.put("sources", sources);
+        options.put("destinations", destinations);
+        options.put("inputQueuesSizes", inputQueuesSizes);
+        options.put("outputQueuesSizes", outputQueuesSizes);
+        switchLoop.configureSwitch(cellSizeValue, switchType, options);
     }
 
     @Override
@@ -133,28 +147,32 @@ public class FXMLDocumentController implements Initializable {
         double probabilityOfPacketArrival = this.inputSpinner.getValue();
         int packetMinimalSize = this.packetMinimalSizeSpinner.getValue();
         int packetMaximalSize = this.packetMaximalSizeSpinner.getValue();
+        int queueSize = this.inputQueueSizeSpinner.getValue();
         int outId = -1;
         if (!this.outputComboBox.isDisabled()) {
             outId = this.outputComboBox.getSelectionModel().getSelectedIndex();
         }
-        return new InputPortModel(probabilityOfPacketArrival, packetMinimalSize, packetMaximalSize, outId);
+        return new InputPortModel(probabilityOfPacketArrival, packetMinimalSize, packetMaximalSize, outId, queueSize);
     }
 
     private OutputPortModel makeOutputPortFromFields() {
         double probabilityOfBusiness = this.probabilityOfBusinessSpinner.getValue();
         int capacity = this.outputSpinner.getValue();
-        return new OutputPortModel(capacity, probabilityOfBusiness);
+        int queueSize = this.outputQueueSizeSpinner.getValue();
+        return new OutputPortModel(capacity, probabilityOfBusiness, queueSize);
     }
 
     private void clearInputPorts() {
         this.inputSpinner.getValueFactory().setValue(0.01);
         this.packetMaximalSizeSpinner.getValueFactory().setValue(1);
         this.packetMinimalSizeSpinner.getValueFactory().setValue(1);
+        this.inputQueueSizeSpinner.getValueFactory().setValue(1);
     }
 
     private void clearOutputPorts() {
         this.outputSpinner.getValueFactory().setValue(1);
         this.probabilityOfBusinessSpinner.getValueFactory().setValue(0.5);
+        this.outputQueueSizeSpinner.getValueFactory().setValue(1);
     }
 
     @FXML
@@ -173,7 +191,7 @@ public class FXMLDocumentController implements Initializable {
         inputPortModel = makeInputPortFromFields();
         inputPortModels.set(selectedIndex, inputPortModel);
         inputParamsListView.setItems(inputPortModels);
-        this.inputSpinner.getValueFactory().setValue(0.01);
+        this.clearInputPorts();
     }
 
     @FXML
@@ -188,6 +206,7 @@ public class FXMLDocumentController implements Initializable {
         this.packetMinimalSizeSpinner.getValueFactory().setValue(inputPortModel.packetMinimalSize);
         this.packetMaximalSizeSpinner.getValueFactory().setValue(inputPortModel.packetMaximalSize);
         this.packetTypeCombo.setValue(inputPortModel.outId != -1 ? "Wybrany output" : "Losowy output");
+        this.inputQueueSizeSpinner.getValueFactory().setValue(inputPortModel.queueSize);
         if (inputPortModel.outId != -1) {
             // todo
             this.outputComboBox.setDisable(false);
@@ -199,6 +218,7 @@ public class FXMLDocumentController implements Initializable {
     private void didSelectOutput(OutputPortModel outputPortModel) {
         this.probabilityOfBusinessSpinner.getValueFactory().setValue(outputPortModel.probabilityOfBusiness);
         this.outputSpinner.getValueFactory().setValue(outputPortModel.capacity);
+        this.outputQueueSizeSpinner.getValueFactory().setValue(outputPortModel.queueSize);
     }
 
     @FXML
@@ -256,7 +276,6 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void setupViews() {
-
         this.packetTypeCombo.setItems(FXCollections.observableArrayList("Losowy output", "Wybrany output"));
         this.packetTypeCombo.setValue("Losowy output");
         this.packetTypeCombo.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
@@ -270,6 +289,12 @@ public class FXMLDocumentController implements Initializable {
         packetMinimalSizeSpinner.setValueFactory(integerSpinnerValueFactory);
         integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
         packetMaximalSizeSpinner.setValueFactory(integerSpinnerValueFactory);
+
+        integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        this.inputQueueSizeSpinner.setValueFactory(integerSpinnerValueFactory);
+
+        integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        outputQueueSizeSpinner.setValueFactory(integerSpinnerValueFactory);
 
         this.switchTypeCombo.setItems(FXCollections.observableArrayList(SwitchType.values()));
         this.switchTypeCombo.getSelectionModel().selectFirst();

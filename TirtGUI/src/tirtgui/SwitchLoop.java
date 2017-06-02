@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.animation.KeyFrame;
 
 enum SwitchType {
-    Type1, Type2, Type3
+    InputQueueing, OutputQueueing, VirtualOutputQueueing
 }
 
 /**
@@ -47,19 +47,16 @@ public class SwitchLoop {
 
     public void configureSwitch(int cellSize, SwitchType switchType, HashMap options) {
         switch (switchType) {
-            case Type1:
+            case InputQueueing:
                 // type 1
                 ArrayList<IPacketSource> sources = new ArrayList<>();
                 sources.addAll((Collection<? extends IPacketSource>) options.get("sources"));
-
-                int inputQueuesSizes[] = (int[]) options.get("inputQueuesSizes");
-
+                int inputQueuesSizes[] = ((ArrayList<Integer>) options.get("inputQueuesSizes")).stream().mapToInt(i -> i).toArray();
                 ArrayList<APacketDestination> destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
-
                 this.switchEntity = new Switch(cellSize, sources, destinations, inputQueuesSizes);
                 break;
-            case Type2:
+            case OutputQueueing:
                 // type 2
                 break;
             default:
