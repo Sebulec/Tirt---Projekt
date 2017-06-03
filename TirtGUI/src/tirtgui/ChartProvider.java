@@ -5,6 +5,7 @@
  */
 package tirtgui;
 
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
@@ -14,7 +15,8 @@ import javafx.scene.chart.XYChart;
  */
 public class ChartProvider {
 
-    LineChart<String, Number> chart;
+    Chart chart;
+
     XYChart.Series<String, Number> series1;
 
     public ChartProvider(LineChart<String, Number> chart) {
@@ -24,10 +26,10 @@ public class ChartProvider {
     public void makeChart() {
         // TODO
         series1 = new XYChart.Series<>();
-        chart.getData().addAll(series1);
+//        chart.getData().addAll(series1);
     }
 
     public void cleanData() {
-        chart.getData().removeAll(chart.getData());
+//        chart.getData().removeAll(chart.getData());
     }
 }

@@ -19,8 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -39,8 +39,8 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
  */
 public class FXMLDocumentController implements Initializable {
 
+    Stats stats = new Stats();
     SwitchLoop switchLoop; // instance of switch loop, not launched yet
-    ChartProvider chartProvider;
     ObservableList<InputPortModel> inputPortModels = FXCollections.observableArrayList();
     ObservableList<OutputPortModel> outputPortModels = FXCollections.observableArrayList();
 
@@ -55,8 +55,17 @@ public class FXMLDocumentController implements Initializable {
     private Spinner<Double> inputSpinner;
     @FXML
     private Spinner<Integer> outputSpinner;
+
+    /**
+     * * charts **
+     */
     @FXML
     LineChart<String, Number> lineChart1;
+    @FXML
+    BarChart<String, Double> barChart1;
+    /**
+     * * end charts **
+     */
     @FXML
     private Label numberOfIterationsLabel;
     @FXML
@@ -82,6 +91,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Spinner<Integer> outputQueueSizeSpinner;
     @FXML
+    private ComboBox<OutputPortModel> selectOutputComboBox;
+    @FXML
     private ComboBox<OutputPortModel> outputComboBox; // todo
 
     @FXML
@@ -101,6 +112,7 @@ public class FXMLDocumentController implements Initializable {
             cellSize.setDisable(true);
             prepareValues();
             updateViews();
+            configureCharts();
             resetButton.setDisable(false);
             switchLoop.start();
         }
@@ -133,7 +145,6 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setupViews();
         initSwitch();
-        configureCharts();
         resetButton.setDisable(true);
     }
 
@@ -141,7 +152,6 @@ public class FXMLDocumentController implements Initializable {
     private void resetButtonAction(ActionEvent event) {
         numberOfIterations = 0;
         initSwitch();
-        configureCharts();
     }
 
     private InputPortModel makeInputPortFromFields() {
@@ -268,17 +278,19 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void configureCharts() {
-        // TODO
-        lineChart1.getData().removeAll(lineChart1.getData());
-        this.chartProvider = new ChartProvider(lineChart1);
-        lineChart1.setCreateSymbols(false);
-        chartProvider.makeChart();
+        barChart1.getData().removeAll(barChart1.getData());
+        barChart1.setStyle("-fx-font-size: " + 7 + "px;");
+        barChart1.setTitle("Procent odrzuceń ze względu na rozmiar pakietu");
+        barChart1.animatedProperty().set(false);
+
     }
     int count = 0;
 
     public void updateCharts() {
-        System.out.println("Updating charts");
-        chartProvider.series1.getData().add(new XYChart.Data(String.valueOf(count++), Math.random() * 500));
+        int outId = this.selectOutputComboBox.getSelectionModel().getSelectedIndex();
+        // bar chart percent rejected packets
+        barChart1.getData().removeAll(barChart1.getData());
+        barChart1.getData().addAll(stats.getPercentRejectedPackets(this.switchLoop.switchEntity, outId));
     }
 
     public void initSwitch() {
@@ -286,9 +298,6 @@ public class FXMLDocumentController implements Initializable {
         switchLoop.handler = new Handler() {
             @Override
             public void updateUI() {
-                // step for switch
-                switchLoop.switchEntity.step();
-                System.out.println("Packets: " + switchLoop.switchEntity.getRejectedPackets());
                 updateCharts();
                 numberOfIterations++;
                 updateViews();
@@ -348,6 +357,11 @@ public class FXMLDocumentController implements Initializable {
             if (newValue != null) {
                 this.didSelectOutput(newValue);
             }
+        });
+        this.selectOutputComboBox.setItems(this.outputParamsListView.getItems());
+        this.selectOutputComboBox.getSelectionModel().selectFirst();
+        this.selectOutputComboBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+
         });
     }
 

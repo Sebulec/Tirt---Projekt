@@ -53,7 +53,7 @@ public class SwitchLoop {
                 int inputQueuesSizes[] = ((ArrayList<Integer>) options.get("inputQueuesSizes")).stream().mapToInt(i -> i).toArray();
                 ArrayList<APacketDestination> destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
-                this.switchEntity = new Switch(cellSize, sources, destinations, inputQueuesSizes);
+                this.switchEntity = new Switch(cellSize, sources, inputQueuesSizes, destinations);
                 return;
             case OutputQueueing:
                 sources = new ArrayList<>();
@@ -81,6 +81,7 @@ public class SwitchLoop {
 
     public void handle(ActionEvent actionEvent) {
         // recalculate packets
+        switchEntity.step();
         handler.updateUI(); // update UI
     }
 
