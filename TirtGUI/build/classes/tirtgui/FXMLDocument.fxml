@@ -99,13 +99,13 @@
                         <HBox alignment="CENTER">
                            <children>
                               <Label text="Zakres dolny:" />
-                              <Spinner fx:id="packetMinimalSizeSpinner" prefHeight="27.0" prefWidth="97.0" />
+                              <Spinner fx:id="packetMinimalSizeSpinner" editable="true" prefHeight="27.0" prefWidth="97.0" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER">
                            <children>
                               <Label text="Zakres górny:" />
-                              <Spinner fx:id="packetMaximalSizeSpinner" prefHeight="27.0" prefWidth="97.0" />
+                              <Spinner fx:id="packetMaximalSizeSpinner" editable="true" prefHeight="27.0" prefWidth="97.0" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER">
@@ -141,11 +141,11 @@
                   <Label prefHeight="34.0" prefWidth="206.0" text="Przepustowość łącza " />
                   <Spinner fx:id="outputSpinner" editable="true" prefHeight="27.0" prefWidth="190.0" />
                   <Label prefHeight="34.0" prefWidth="190.0" text="P-stwo obciążenia" />
-                  <Spinner fx:id="probabilityOfBusinessSpinner" editable="true" prefHeight="27.0" prefWidth="193.0" />
+                  <Spinner fx:id="probabilityOfBusinessSpinner" disable="true" editable="true" prefHeight="27.0" prefWidth="193.0" />
                   <HBox alignment="CENTER">
                      <children>
                         <Label prefHeight="17.0" prefWidth="105.0" text="Rozmiar kolejki:" />
-                        <Spinner fx:id="outputQueueSizeSpinner" prefHeight="27.0" prefWidth="76.0" />
+                        <Spinner fx:id="outputQueueSizeSpinner" editable="true" prefHeight="27.0" prefWidth="76.0" />
                      </children>
                   </HBox>
                   <ToolBar prefHeight="39.0" prefWidth="193.0">

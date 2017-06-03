@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -221,6 +222,23 @@ public class FXMLDocumentController implements Initializable {
         this.outputQueueSizeSpinner.getValueFactory().setValue(outputPortModel.queueSize);
     }
 
+    private void didSelectSwitchType(SwitchType switchType) {
+        switch (switchType) {
+            case InputQueueing:
+                this.outputQueueSizeSpinner.setDisable(true);
+                this.inputQueueSizeSpinner.setDisable(false);
+                break;
+            case OutputQueueing:
+                this.outputQueueSizeSpinner.setDisable(false);
+                this.inputQueueSizeSpinner.setDisable(true);
+                break;
+            case VirtualOutputQueueing:
+                this.inputQueueSizeSpinner.setDisable(false);
+                this.outputQueueSizeSpinner.setDisable(false);
+                break;
+        }
+    }
+
     @FXML
     private void addOutputClicked(ActionEvent event) {
         OutputPortModel outputPortModel = makeOutputPortFromFields();
@@ -268,6 +286,9 @@ public class FXMLDocumentController implements Initializable {
         switchLoop.handler = new Handler() {
             @Override
             public void updateUI() {
+                // step for switch
+                switchLoop.switchEntity.step();
+                System.out.println("Packets: " + switchLoop.switchEntity.getRejectedPackets());
                 updateCharts();
                 numberOfIterations++;
                 updateViews();
@@ -298,6 +319,11 @@ public class FXMLDocumentController implements Initializable {
 
         this.switchTypeCombo.setItems(FXCollections.observableArrayList(SwitchType.values()));
         this.switchTypeCombo.getSelectionModel().selectFirst();
+        this.switchTypeCombo.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends SwitchType> observable, SwitchType oldValue, SwitchType newValue) -> {
+            if (newValue != null) {
+                this.didSelectSwitchType(newValue);
+            }
+        });
 
         this.inputSpinner.setEditable(true);
         DoubleSpinnerValueFactory valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0.01, 1, 0.5);

@@ -48,19 +48,33 @@ public class SwitchLoop {
     public void configureSwitch(int cellSize, SwitchType switchType, HashMap options) {
         switch (switchType) {
             case InputQueueing:
-                // type 1
                 ArrayList<IPacketSource> sources = new ArrayList<>();
                 sources.addAll((Collection<? extends IPacketSource>) options.get("sources"));
                 int inputQueuesSizes[] = ((ArrayList<Integer>) options.get("inputQueuesSizes")).stream().mapToInt(i -> i).toArray();
                 ArrayList<APacketDestination> destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
                 this.switchEntity = new Switch(cellSize, sources, destinations, inputQueuesSizes);
-                break;
+                return;
             case OutputQueueing:
-                // type 2
+                sources = new ArrayList<>();
+                sources.addAll((Collection<? extends IPacketSource>) options.get("sources"));
+                int outputQueuesSizes[] = ((ArrayList<Integer>) options.get("outputQueuesSizes")).stream().mapToInt(i -> i).toArray();
+                destinations = new ArrayList<>();
+                destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
+                this.switchEntity = new Switch(cellSize, sources, destinations, outputQueuesSizes);
                 break;
             default:
-                // type 3
+                sources = new ArrayList<>();
+                sources.addAll((Collection<? extends IPacketSource>) options.get("sources"));
+                inputQueuesSizes = ((ArrayList<Integer>) options.get("inputQueuesSizes")).stream().mapToInt(i -> i).toArray();
+                outputQueuesSizes = ((ArrayList<Integer>) options.get("outputQueuesSizes")).stream().mapToInt(i -> i).toArray();
+                int[][] multiDimensionalQueuesSizes = new int[inputQueuesSizes.length][outputQueuesSizes.length];
+                for (int i = 0; i < inputQueuesSizes.length; i++) {
+                    multiDimensionalQueuesSizes[i] = outputQueuesSizes;
+                }
+                destinations = new ArrayList<>();
+                destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
+                this.switchEntity = new Switch(cellSize, sources, multiDimensionalQueuesSizes, destinations);
                 break;
         }
     }
