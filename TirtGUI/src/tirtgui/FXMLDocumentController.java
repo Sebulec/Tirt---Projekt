@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,6 +62,16 @@ public class FXMLDocumentController implements Initializable {
     LineChart<String, Number> lineChart1;
     @FXML
     BarChart<String, Double> barChart1;
+    @FXML
+    BarChart<String, Double> barChart2;
+    @FXML
+    BarChart<String, Double> barChart3;
+    @FXML
+    BarChart<String, Double> barChart4;
+    @FXML
+    BarChart<String, Double> barChart5;
+    @FXML
+    BarChart<String, Double> barChart6;
     /**
      * * end charts **
      */
@@ -279,18 +288,70 @@ public class FXMLDocumentController implements Initializable {
 
     public void configureCharts() {
         barChart1.getData().removeAll(barChart1.getData());
-        barChart1.setStyle("-fx-font-size: " + 7 + "px;");
         barChart1.setTitle("Procent odrzuceń ze względu na rozmiar pakietu");
+        barChart1.getXAxis().setLabel("Rozmiar pakietu");
+        barChart1.getYAxis().setLabel("Wartość[%]");
         barChart1.animatedProperty().set(false);
+
+        barChart2.getData().removeAll(barChart2.getData());
+        barChart2.setTitle("Średnie opóźnienie ze względu na rozmiar pakietu");
+        barChart2.getXAxis().setLabel("Rozmiar pakietu");
+        barChart2.getYAxis().setLabel("Wartość opóźnienia");
+        barChart2.animatedProperty().set(false);
+
+        barChart3.getData().removeAll(barChart3.getData());
+        barChart3.setTitle("Średnie opóźnienie ze względu na port wejściowy");
+        barChart3.getXAxis().setLabel("Port wejsćiowy");
+        barChart3.getYAxis().setLabel("Wartość opóźnienia");
+        barChart3.animatedProperty().set(false);
+
+        barChart5.getData().removeAll(barChart3.getData());
+        barChart5.setTitle("Średnie opóźnienie ze względu na port wyjściowy");
+        barChart5.getXAxis().setLabel("Port wyjściowy");
+        barChart5.getYAxis().setLabel("Wartość opóźnienia");
+        barChart5.animatedProperty().set(false);
+
+        barChart4.getData().removeAll(barChart4.getData());
+        barChart4.setTitle("Procent odrzuceń ze względu na port wyjściowy");
+        barChart4.getXAxis().setLabel("Port wyjściowy");
+        barChart4.getYAxis().setLabel("Wartość[%]");
+        barChart4.animatedProperty().set(false);
+
+        barChart6.getData().removeAll(barChart6.getData());
+        barChart6.setTitle("Procent odrzuceń ze względu na port wejściowy");
+        barChart6.getXAxis().setLabel("Port wejściowy");
+        barChart6.getYAxis().setLabel("Wartość[%]");
+        barChart6.animatedProperty().set(false);
 
     }
     int count = 0;
 
     public void updateCharts() {
         int outId = this.selectOutputComboBox.getSelectionModel().getSelectedIndex();
-        // bar chart percent rejected packets
+        // bar chart percent rejected packets for size
         barChart1.getData().removeAll(barChart1.getData());
         barChart1.getData().addAll(stats.getPercentRejectedPackets(this.switchLoop.switchEntity, outId));
+
+        // bar chart percent rejected packets for outputs
+        barChart4.getData().removeAll(barChart4.getData());
+        barChart4.getData().addAll(stats.getPercentRejectedPackets(this.switchLoop.switchEntity));
+
+        // bar chart percent rejected packets for inputs 
+        barChart6.getData().removeAll(barChart6.getData());
+        barChart6.getData().addAll(stats.getPercentRejectedPacketsForInputs(this.switchLoop.switchEntity));
+
+        // bar chart average delay for size
+        barChart2.getData().removeAll(barChart2.getData());
+        barChart2.getData().addAll(stats.getAverageDelayForOutput(this.switchLoop.switchEntity, outId));
+
+        // bar chart average delat for input
+        barChart3.getData().removeAll(barChart3.getData());
+        barChart3.getData().addAll(stats.getAverageDelayForInputs(this.switchLoop.switchEntity));
+
+        // bar chart average dleat for output
+        barChart5.getData().removeAll(barChart5.getData());
+        barChart5.getData().addAll(stats.getAverageDelayForOutputs(this.switchLoop.switchEntity));
+
     }
 
     public void initSwitch() {
