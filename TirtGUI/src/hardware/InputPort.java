@@ -13,7 +13,7 @@ public class InputPort
 	private IPacketSource source;
 	private final InputPortType type;
 	private List<PacketQueue> queues;
-	private int connectedTo;
+	public int connectedTo;
 	
 	private InputPort(int id, Switch _switch, List<OutputPort> outputPorts, IPacketSource source, InputPortType type)
 	{

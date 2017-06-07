@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1058.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tirtgui.FXMLDocumentController">
+    <children>
+      <HBox layoutX="14.0" layoutY="14.0" spacing="5.0" />
+      <ToolBar prefHeight="39.0" prefWidth="747.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <items>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Typ Switcha" />
+            <ChoiceBox id="algorithmCombo" fx:id="switchTypeCombo" prefHeight="27.0" prefWidth="184.0" />
+            <Label fx:id="numberOfIterationsLabel" text="Liczba iteracji:" />
+        </items>
+      </ToolBar>
+      <ToolBar layoutY="39.0" prefHeight="40.0" prefWidth="745.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <items>
+            <Label text="Rozmiar komórki:" />
+            <Spinner fx:id="cellSize" editable="true" />
+         </items>
+      </ToolBar>
+      <ToolBar layoutX="398.0" layoutY="652.0" prefHeight="47.0" prefWidth="298.0">
+         <items>
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="27.0" prefWidth="140.0" text="Start" />
+            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="27.0" prefWidth="140.0" text="Reset" />
+         </items>
+      </ToolBar>
+      <Group fx:id="inputsGroup" layoutX="14.0" layoutY="123.0">
+         <children>
+            <ListView fx:id="inputParamsListView" layoutX="4.0" layoutY="29.0" prefHeight="219.0" prefWidth="218.0" />
+            <Label layoutX="3.0" prefHeight="24.0" prefWidth="209.0" text="Porty wejściowe" textAlignment="CENTER" />
+            <ToolBar layoutX="7.0" layoutY="248.0" orientation="VERTICAL" prefHeight="300.0" prefWidth="199.0">
+               <items>
+                  <Label prefHeight="34.0" prefWidth="190.0" text="P-stwo pojawienia się pakietu" />
+                  <Spinner fx:id="inputSpinner" editable="true" prefHeight="27.0" prefWidth="186.0" />
+                  <ComboBox fx:id="packetTypeCombo" prefHeight="27.0" prefWidth="187.0" promptText="Typ pakietu" />
+                  <ToolBar orientation="VERTICAL" prefHeight="106.0" prefWidth="194.0">
+                     <items>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Zakres dolny:" />
+                              <Spinner fx:id="packetMinimalSizeSpinner" editable="true" prefHeight="27.0" prefWidth="97.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Zakres górny:" />
+                              <Spinner fx:id="packetMaximalSizeSpinner" editable="true" prefHeight="27.0" prefWidth="97.0" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <ComboBox fx:id="outputComboBox" disable="true" prefHeight="27.0" prefWidth="182.0" promptText="Port docelowy" />
+                           </children>
+                        </HBox>
+                     </items>
+                  </ToolBar>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="Rozmiar kolejki:" />
+                        <Spinner fx:id="inputQueueSizeSpinner" editable="true" prefHeight="27.0" prefWidth="83.0" />
+                     </children>
+                  </HBox>
+                  <ToolBar>
+                     <items>
+                        <Button mnemonicParsing="false" onAction="#addInputClicked" text="Dodaj" />
+                        <Button mnemonicParsing="false" onAction="#editInputClicked" text="Zapisz" />
+                        <Button mnemonicParsing="false" onAction="#removeInputClicked" text="Usuń" />
+                     </items>
+                  </ToolBar>
+               </items>
+            </ToolBar>
+         </children>
+      </Group>
+      <Group fx:id="outputsGroup" layoutX="817.0" layoutY="123.0" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="123.0">
+         <children>
+            <ListView fx:id="outputParamsListView" layoutY="29.0" prefHeight="219.0" prefWidth="223.0" />
+            <Label layoutX="3.0" prefHeight="24.0" prefWidth="209.0" text="Porty wyjściowe" textAlignment="CENTER" />
+            <ToolBar layoutX="4.0" layoutY="248.0" orientation="VERTICAL" prefHeight="222.0" prefWidth="218.0">
+               <items>
+                  <Label prefHeight="34.0" prefWidth="206.0" text="Przepustowość łącza " />
+                  <Spinner fx:id="outputSpinner" editable="true" prefHeight="27.0" prefWidth="190.0" />
+                  <Label prefHeight="34.0" prefWidth="190.0" text="P-stwo obciążenia" />
+                  <Spinner fx:id="probabilityOfBusinessSpinner" editable="true" prefHeight="27.0" prefWidth="193.0" />
+                  <HBox alignment="CENTER" disable="true">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="105.0" text="Rozmiar kolejki:" />
+                        <Spinner fx:id="outputQueueSizeSpinner" editable="true" prefHeight="27.0" prefWidth="76.0" />
+                     </children>
+                  </HBox>
+                  <ToolBar prefHeight="39.0" prefWidth="193.0">
+                     <items>
+                        <Button mnemonicParsing="false" onAction="#addOutputClicked" text="Dodaj" />
+                        <Button mnemonicParsing="false" onAction="#editOutputClicked" text="Zapisz" />
+                        <Button mnemonicParsing="false" onAction="#removeOutputClicked" text="Usuń" />
+                     </items>
+                  </ToolBar>
+               </items>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </ToolBar>
+         </children>
+      </Group>
+      <HBox alignment="CENTER" layoutX="588.0" layoutY="523.0">
+         <children>
+            <Label text="Wykres dla:" />
+            <ComboBox fx:id="selectOutputComboBox" prefWidth="150.0" />
+         </children>
+      </HBox>
+      <TabPane layoutX="241.0" layoutY="90.0" prefHeight="426.0" prefWidth="572.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Wykres1">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="barChart1" legendVisible="false" prefHeight="400.0" prefWidth="572.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+            <NumberAxis fx:id="yAxis" layoutX="10.0" side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Wykres2">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="barChart4" legendVisible="false" prefHeight="400.0" prefWidth="572.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis2" layoutX="10.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Wykres3">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="barChart6" legendVisible="false" prefHeight="400.0" prefWidth="572.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis21" layoutX="10.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Wykres4">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="barChart2" legendVisible="false" prefHeight="400.0" prefWidth="572.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis1" layoutX="10.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Wykres5">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="barChart3" legendVisible="false" prefHeight="400.0" prefWidth="572.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis11" layoutX="10.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Wykres6">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BarChart fx:id="barChart5" legendVisible="false" prefHeight="400.0" prefWidth="572.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxis111" layoutX="10.0" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+    </children>
+</AnchorPane>

@@ -42,7 +42,7 @@ public class PacketQueue
 	
 	public boolean canEnqueue(Packet packet)
 	{
-		return (packet == null) ? false : ((maxCapacity == 0) ? head != null : packet.size <= capacity);
+		return (packet == null) ? false : ((maxCapacity == 0) ? head == null : packet.size <= capacity);
 	}
 	
 	public boolean enqueue(Packet packet)
@@ -106,8 +106,8 @@ public class PacketQueue
 		else
 		{
 			int removed = remainingHeadBytes;
-			
 			head = packets.poll();
+			
 			remainingHeadBytes = (head == null) ? 0 : head.size;
 			capacity += (maxCapacity == 0) ? 0 : removed;
 			

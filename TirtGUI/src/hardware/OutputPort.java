@@ -10,7 +10,7 @@ public class OutputPort
 	private Packet beingReceived;
 	private int bytesLeft;
 	private PacketQueue queue;
-	private int connectedTo;
+	public int connectedTo;
 	
 	public OutputPort(int id, Switch _switch, APacketDestination destination, int queueSize)
 	{
