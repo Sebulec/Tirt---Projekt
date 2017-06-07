@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.animation.KeyFrame;
+import schedulers.ISLIPScheduler;
 
 enum SwitchType {
     InputQueueing, OutputQueueing, VirtualOutputQueueing
@@ -54,7 +55,7 @@ public class SwitchLoop {
                 ArrayList<APacketDestination> destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
                 this.switchEntity = new Switch(cellSize, sources, inputQueuesSizes, destinations);
-                this.switchEntity.setScheduler(null); // to do
+                this.switchEntity.setScheduler(new ISLIPScheduler(sources.size(), destinations.size())); // to do
                 return;
             case OutputQueueing:
                 sources = new ArrayList<>();
@@ -63,7 +64,7 @@ public class SwitchLoop {
                 destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
                 this.switchEntity = new Switch(cellSize, sources, destinations, outputQueuesSizes);
-                this.switchEntity.setScheduler(null); // to do
+                this.switchEntity.setScheduler(new ISLIPScheduler(sources.size(), destinations.size())); // to do
                 break;
             default:
                 sources = new ArrayList<>();
@@ -77,7 +78,7 @@ public class SwitchLoop {
                 destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
                 this.switchEntity = new Switch(cellSize, sources, multiDimensionalQueuesSizes, destinations);
-                this.switchEntity.setScheduler(null); // to do
+                this.switchEntity.setScheduler(new ISLIPScheduler(sources.size(), destinations.size())); // to do
                 break;
         }
     }

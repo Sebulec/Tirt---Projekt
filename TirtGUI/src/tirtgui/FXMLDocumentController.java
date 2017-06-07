@@ -11,8 +11,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.IntegerBinding;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -164,7 +170,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private InputPortModel makeInputPortFromFields() {
-        double probabilityOfPacketArrival = this.inputSpinner.getValue();
+        double probabilityOfPacketArrival = this.inputSpinner.getValueFactory().getValue();
         int packetMinimalSize = this.packetMinimalSizeSpinner.getValue();
         int packetMaximalSize = this.packetMaximalSizeSpinner.getValue();
         int queueSize = this.inputQueueSizeSpinner.getValue();
@@ -196,7 +202,6 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-
     private void addInputClicked(ActionEvent event) {
         InputPortModel inputPortModel = makeInputPortFromFields();
         clearInputPorts();
@@ -424,6 +429,24 @@ public class FXMLDocumentController implements Initializable {
         this.selectOutputComboBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
 
         });
+
+//        this.inputPortModels.addListener(new ListChangeListener<Object>() {
+//            @Override
+//            public void onChanged(ListChangeListener.Change<? extends Object> c) {
+//                startButton.setDisable(inputPortModels.size() >= 1);
+//            }
+//        });
+//
+//        this.outputPortModels.addListener(new ListChangeListener<OutputPortModel>() {
+//            @Override
+//            public void onChanged(ListChangeListener.Change<? extends OutputPortModel> c) {
+//                if (outputPortModels.size() >= 1) {
+//                    // start enabled
+//                } else {
+//
+//                }
+//            }
+//        });
     }
 
     public void showAlertWithMessage(String msg) {
