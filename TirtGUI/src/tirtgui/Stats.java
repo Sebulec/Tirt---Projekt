@@ -79,6 +79,7 @@ public class Stats {
             double average = receivedPackets.stream().filter((packet) -> packet.getInputId() == input).mapToInt(Packet::getDelay).average().getAsDouble();
             averages.add(new Data<>(String.valueOf(input), average));
         });
+        series1.setData(averages);
         return series1;
     }
 
@@ -94,6 +95,7 @@ public class Stats {
             double average = receivedPackets.stream().filter((packet) -> packet.getOutputId() == output).mapToInt(Packet::getDelay).average().getAsDouble();
             averages.add(new Data<>(String.valueOf(output), average));
         });
+        series1.setData(averages);
         return series1;
     }
 

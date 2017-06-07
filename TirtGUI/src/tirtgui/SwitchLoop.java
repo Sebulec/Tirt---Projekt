@@ -30,7 +30,7 @@ public class SwitchLoop {
     public Handler handler;
     public Switch switchEntity;
 
-    public SwitchLoop(long probeDuration) {
+    public SwitchLoop(double probeDuration) {
         PROBE_FREQUENCY = Duration.seconds(probeDuration);
         timeline = new Timeline(
                 new KeyFrame(

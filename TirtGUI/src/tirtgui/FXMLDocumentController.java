@@ -29,6 +29,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -50,8 +51,6 @@ public class FXMLDocumentController implements Initializable {
     ObservableList<OutputPortModel> outputPortModels = FXCollections.observableArrayList();
 
     long numberOfIterations = 0;
-    @FXML
-    private Button resetButton;
     @FXML
     private Button startButton;
     @FXML
@@ -108,6 +107,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ComboBox<OutputPortModel> selectOutputComboBox;
     @FXML
+    private Spinner<Integer> maxIterSpinner;
+    @FXML
+    private CheckBox maxIterCheckbox;
+    @FXML
     private ComboBox<OutputPortModel> outputComboBox; // todo
 
     @FXML
@@ -128,7 +131,6 @@ public class FXMLDocumentController implements Initializable {
             prepareValues();
             updateViews();
             configureCharts();
-            resetButton.setDisable(false);
             switchLoop.start();
         }
     }
@@ -159,13 +161,6 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupViews();
-        initSwitch();
-        resetButton.setDisable(true);
-    }
-
-    @FXML
-    private void resetButtonAction(ActionEvent event) {
-        numberOfIterations = 0;
         initSwitch();
     }
 
@@ -360,12 +355,16 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void initSwitch() {
-        switchLoop = new SwitchLoop(2);
+        switchLoop = new SwitchLoop(0.5);
         switchLoop.handler = new Handler() {
             @Override
             public void updateUI() {
                 updateCharts();
                 numberOfIterations++;
+                if (maxIterCheckbox.isSelected() && numberOfIterations > maxIterSpinner.getValue()) {
+                    switchLoop.stop();
+                    return;
+                }
                 updateViews();
             }
         };
@@ -428,6 +427,16 @@ public class FXMLDocumentController implements Initializable {
         this.selectOutputComboBox.getSelectionModel().selectFirst();
         this.selectOutputComboBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
 
+        });
+
+        integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        this.maxIterSpinner.setValueFactory(integerSpinnerValueFactory);
+
+        this.maxIterCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                maxIterSpinner.setDisable(!newValue);
+            }
         });
 
 //        this.inputPortModels.addListener(new ListChangeListener<Object>() {

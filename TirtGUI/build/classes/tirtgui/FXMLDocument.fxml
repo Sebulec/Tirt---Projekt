@@ -6,6 +6,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -24,6 +25,8 @@
         <items>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Typ Switcha" />
             <ChoiceBox id="algorithmCombo" fx:id="switchTypeCombo" prefHeight="27.0" prefWidth="184.0" />
+            <CheckBox fx:id="maxIterCheckbox" mnemonicParsing="false" text="Maksymalna liczba iteracji" />
+            <Spinner fx:id="maxIterSpinner" disable="true" editable="true" />
             <Label fx:id="numberOfIterationsLabel" text="Liczba iteracji:" />
         </items>
       </ToolBar>
@@ -31,12 +34,6 @@
          <items>
             <Label text="Rozmiar komórki:" />
             <Spinner fx:id="cellSize" editable="true" />
-         </items>
-      </ToolBar>
-      <ToolBar layoutX="398.0" layoutY="652.0" prefHeight="47.0" prefWidth="298.0">
-         <items>
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="27.0" prefWidth="140.0" text="Start" />
-            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetButtonAction" prefHeight="27.0" prefWidth="140.0" text="Reset" />
          </items>
       </ToolBar>
       <Group fx:id="inputsGroup" layoutX="14.0" layoutY="123.0">
@@ -219,5 +216,6 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="startButton" layoutX="459.0" layoutY="658.0" mnemonicParsing="false" onAction="#startButtonAction" prefHeight="27.0" prefWidth="140.0" text="Start" />
     </children>
 </AnchorPane>
