@@ -98,10 +98,10 @@
                   <Spinner fx:id="outputSpinner" editable="true" prefHeight="27.0" prefWidth="190.0" />
                   <Label prefHeight="34.0" prefWidth="190.0" text="P-stwo obciążenia" />
                   <Spinner fx:id="probabilityOfBusinessSpinner" editable="true" prefHeight="27.0" prefWidth="193.0" />
-                  <HBox alignment="CENTER" disable="true">
+                  <HBox alignment="CENTER">
                      <children>
                         <Label prefHeight="17.0" prefWidth="105.0" text="Rozmiar kolejki:" />
-                        <Spinner fx:id="outputQueueSizeSpinner" editable="true" prefHeight="27.0" prefWidth="76.0" />
+                        <Spinner fx:id="outputQueueSizeSpinner" disable="true" editable="true" prefHeight="27.0" prefWidth="76.0" />
                      </children>
                   </HBox>
                   <ToolBar prefHeight="39.0" prefWidth="193.0">
