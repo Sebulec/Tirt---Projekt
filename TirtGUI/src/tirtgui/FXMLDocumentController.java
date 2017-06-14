@@ -311,18 +311,23 @@ public class FXMLDocumentController implements Initializable {
         lineChart1.legendVisibleProperty().set(true);
         lineChart1.animatedProperty().set(false);
 
-        barChart2.getData().removeAll(barChart2.getData());
-        barChart2.getXAxis().setLabel("Port wyjściowy");
-        barChart2.getYAxis().setLabel("Procent odrzucen");
-        barChart2.animatedProperty().set(false);
+        barChart4.getData().removeAll(barChart4.getData());
+        barChart4.getXAxis().setLabel("Port wyjsciowy");
+        barChart4.getYAxis().setLabel("Procent odrzucen");
+        barChart4.animatedProperty().set(false);
 
         lineChart2.getData().removeAll(lineChart2.getData());
-        lineChart2.setTitle("Procent odrzucen ze względu na rozmiar pakietu");
+        lineChart2.setTitle("Procent odrzucen ze względu na port wyjsciowy");
         lineChart2.getXAxis().setLabel("Czas");
         lineChart2.getYAxis().setLabel("Procent odrzucen");
         lineChart2.setCreateSymbols(false);
         lineChart2.legendVisibleProperty().set(true);
         lineChart2.animatedProperty().set(false);
+
+        barChart2.getData().removeAll(barChart2.getData());
+        barChart2.getXAxis().setLabel("Port wyjściowy");
+        barChart2.getYAxis().setLabel("Procent odrzucen");
+        barChart2.animatedProperty().set(false);
 
         barChart3.getData().removeAll(barChart3.getData());
         barChart3.getXAxis().setLabel("Port wejsciowy");
@@ -339,7 +344,7 @@ public class FXMLDocumentController implements Initializable {
 
         barChart5.getData().removeAll(barChart3.getData());
         barChart5.getXAxis().setLabel("Port wyjsciowy");
-        barChart5.getYAxis().setLabel("Wartość opoznienia");
+        barChart5.getYAxis().setLabel("Procent odrzuceń");
         barChart5.animatedProperty().set(false);
 
         lineChart4.getData().removeAll(lineChart4.getData());
@@ -349,10 +354,7 @@ public class FXMLDocumentController implements Initializable {
         lineChart4.setCreateSymbols(false);
         lineChart4.legendVisibleProperty().set(true);
 
-        barChart4.getData().removeAll(barChart4.getData());
-        barChart4.getXAxis().setLabel("Port wyjsciowy");
-        barChart4.getYAxis().setLabel("Rozmiar pakietu");
-        barChart4.animatedProperty().set(false);
+
 
         lineChart5.getData().removeAll(lineChart5.getData());
         lineChart5.setTitle("Procent odrzucen ze względu na port wyjsciowy");
