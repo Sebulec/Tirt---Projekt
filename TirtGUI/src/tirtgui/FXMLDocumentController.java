@@ -64,7 +64,17 @@ public class FXMLDocumentController implements Initializable {
      * * charts **
      */
     @FXML
-    LineChart<String, Number> lineChart1;
+    LineChart<String, Double> lineChart1;
+    @FXML
+    LineChart<String, Double> lineChart2;
+    @FXML
+    LineChart<String, Double> lineChart3;
+    @FXML
+    LineChart<String, Double> lineChart4;
+    @FXML
+    LineChart<String, Double> lineChart5;
+    @FXML
+    LineChart<String, Double> lineChart6;
     @FXML
     BarChart<String, Double> barChart1;
     @FXML
@@ -311,17 +321,41 @@ public class FXMLDocumentController implements Initializable {
         barChart5.getYAxis().setLabel("Wartość opóźnienia");
         barChart5.animatedProperty().set(false);
 
+        lineChart4.getData().removeAll(lineChart4.getData());
+        lineChart4.setTitle("Wykres liniowy");
+        lineChart4.getXAxis().setLabel("Czas");
+        lineChart4.getYAxis().setLabel("Wartość opóźnienia");
+        lineChart4.setCreateSymbols(false);
+        lineChart4.legendVisibleProperty().set(true);
+
+
         barChart4.getData().removeAll(barChart4.getData());
         barChart4.setTitle("Procent odrzuceń ze względu na port wyjściowy");
         barChart4.getXAxis().setLabel("Port wyjściowy");
         barChart4.getYAxis().setLabel("Wartość[%]");
         barChart4.animatedProperty().set(false);
 
+        lineChart5.getData().removeAll(lineChart5.getData());
+        lineChart5.setTitle("Wykres liniowy");
+        lineChart5.getXAxis().setLabel("Czas");
+        lineChart5.getYAxis().setLabel("Procent odrzuceń");
+        lineChart5.setCreateSymbols(false);
+        lineChart5.legendVisibleProperty().set(true);
+        lineChart5.animatedProperty().set(false);
+
         barChart6.getData().removeAll(barChart6.getData());
         barChart6.setTitle("Procent odrzuceń ze względu na port wejściowy");
         barChart6.getXAxis().setLabel("Port wejściowy");
         barChart6.getYAxis().setLabel("Wartość[%]");
         barChart6.animatedProperty().set(false);
+
+        lineChart6.getData().removeAll(lineChart6.getData());
+        lineChart6.setTitle("Wykres liniowy");
+        lineChart6.getXAxis().setLabel("Czas");
+        lineChart6.getYAxis().setLabel("Procent odrzuceń");
+        lineChart6.setCreateSymbols(false);
+        lineChart6.legendVisibleProperty().set(true);
+        lineChart6.animatedProperty().set(false);
 
     }
     int count = 0;
@@ -343,15 +377,18 @@ public class FXMLDocumentController implements Initializable {
         // bar chart average delay for size
         barChart2.getData().removeAll(barChart2.getData());
         barChart2.getData().addAll(stats.getAverageDelayForOutput(this.switchLoop.switchEntity, outId));
+        // line chart average delay for size
 
         // bar chart average delat for input
         barChart3.getData().removeAll(barChart3.getData());
         barChart3.getData().addAll(stats.getAverageDelayForInputs(this.switchLoop.switchEntity));
+        lineChart5.getData().setAll(stats.getAverageDelayForInputsLineChart(this.switchLoop.switchEntity, lineChart5));
 
         // bar chart average dleat for output
         barChart5.getData().removeAll(barChart5.getData());
         barChart5.getData().addAll(stats.getAverageDelayForOutputs(this.switchLoop.switchEntity));
-
+        // line chart
+        lineChart6.getData().setAll(stats.getAverageDelayForOutputsLineChart(this.switchLoop.switchEntity, lineChart6));
     }
 
     public void initSwitch() {

@@ -7,17 +7,20 @@ package tirtgui;
 
 import hardware.Packet;
 import hardware.Switch;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 
 /**
- *
  * @author sebastiankotarski
  */
 public class Stats {
@@ -83,6 +86,39 @@ public class Stats {
         return series1;
     }
 
+    public List<XYChart.Series<String, Double>> getAverageDelayForInputsLineChart(Switch switchEntity, LineChart<String, Double> lineChart) {
+        List<XYChart.Series<String, Double>> series = new ArrayList<>();
+        HashSet<Integer> inputs = new HashSet<>();
+        List<Packet> receivedPackets = switchEntity.getReceivedPackets().stream().flatMap(List::stream).collect(Collectors.toList());
+
+        ObservableList<XYChart.Series<String, Double>> seriesFromChart = FXCollections.observableArrayList(lineChart.getData());
+
+        inputs.addAll(receivedPackets.stream().mapToInt(Packet::getInputId).boxed().collect(Collectors.toList()));
+        Integer time = switchEntity.getTime();
+
+        ObservableList<Data<String, Double>> averages = FXCollections.observableArrayList();
+        for (Integer input : inputs) {
+            double average = receivedPackets.stream().filter((packet) -> packet.getInputId() == input).mapToInt(Packet::getDelay).average().getAsDouble();
+
+            if (seriesFromChart.stream().filter((s) -> s.getName().equals("Input" + input)).count() == 0) {
+                XYChart.Series<String, Double> doubleSeries = new XYChart.Series<String, Double>();
+                doubleSeries.setName("Input" + input);
+                seriesFromChart.add(doubleSeries);
+            }
+
+            seriesFromChart.stream().forEach((s) -> {
+                if (s.getName().equals("Input" + input)) {
+                    s.getData().add(new Data<>(String.valueOf(time), average));
+                }
+            });
+
+        }
+
+        System.out.print(series);
+
+        return seriesFromChart;
+    }
+
     public XYChart.Series<String, Double> getAverageDelayForOutputs(Switch switchEntity) {
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
         HashSet<Integer> outputs = new HashSet<>();
@@ -97,6 +133,41 @@ public class Stats {
         });
         series1.setData(averages);
         return series1;
+    }
+
+    public List<XYChart.Series<String, Double>> getAverageDelayForOutputsLineChart(Switch switchEntity, LineChart<String, Double> lineChart) {
+        List<XYChart.Series<String, Double>> series = new ArrayList<>();
+        HashSet<Integer> outputs = new HashSet<>();
+        List<Packet> receivedPackets = switchEntity.getReceivedPackets().stream().flatMap(List::stream).collect(Collectors.toList());
+
+        outputs.addAll(receivedPackets.stream().mapToInt(Packet::getOutputId).boxed().collect(Collectors.toList()));
+
+        ObservableList<Data<String, Double>> averages = FXCollections.observableArrayList();
+
+        Integer time = switchEntity.getTime();
+
+        ObservableList<XYChart.Series<String, Double>> seriesFromChart = FXCollections.observableArrayList(lineChart.getData());
+
+        for (Integer output : outputs) {
+            double average = receivedPackets.stream().filter((packet) -> packet.getOutputId() == output).mapToInt(Packet::getDelay).average().getAsDouble();
+
+            if (seriesFromChart.stream().filter((s) -> s.getName().equals("Output" + output)).count() == 0) {
+                XYChart.Series<String, Double> doubleSeries = new XYChart.Series<String, Double>();
+                doubleSeries.setName("Output" + output);
+                seriesFromChart.add(doubleSeries);
+            }
+
+            seriesFromChart.stream().forEach((s) -> {
+                if (s.getName().equals("Output" + output)) {
+                    s.getData().add(new Data<>(String.valueOf(time), average));
+                }
+            });
+        }
+        if (seriesFromChart.size() >= 1) {
+            System.out.print(series);
+        }
+
+        return seriesFromChart;
     }
 
     public XYChart.Series<String, Double> getPercentRejectedPackets(Switch switchEntity) {

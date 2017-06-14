@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="TirtGUI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/run525487965/TirtGUI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
