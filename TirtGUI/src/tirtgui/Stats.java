@@ -238,46 +238,50 @@ public class Stats {
         return series1;
     }
 
-//    public List<XYChart.Series<String, Double>> getPercentRejectedPacketsLineChart(Switch switchEntity, LineChart<String, Double> lineChart) {
-//
-//        List<List<Packet>> rejectedPackets = switchEntity.getRejectedPackets();
-//        List<List<Packet>> receivedPackets = switchEntity.getReceivedPackets();
-//        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
-//        ObservableList<Data<String, Double>> percentages = FXCollections.observableArrayList();
-//
-//        List<XYChart.Series<String, Double>> series = new ArrayList<>();
-//        HashSet<Integer> outputs = new HashSet<>();
-////        List<Packet> receivedPackets = switchEntity.getReceivedPackets().stream().flatMap(List::stream).collect(Collectors.toList());
-//
-//        outputs.addAll(receivedPackets.stream().mapToInt(Packet::getOutputId).boxed().collect(Collectors.toList()));
-//
-//        ObservableList<Data<String, Double>> averages = FXCollections.observableArrayList();
-//
-//        Integer time = switchEntity.getTime();
-//
-//        ObservableList<XYChart.Series<String, Double>> seriesFromChart = FXCollections.observableArrayList(lineChart.getData());
-//
-//        for (Integer output : outputs) {
-//            double average = receivedPackets.stream().filter((packet) -> packet.getOutputId() == output).mapToInt(Packet::getDelay).average().getAsDouble();
-//
-//            if (seriesFromChart.stream().filter((s) -> s.getName().equals("Output" + output)).count() == 0) {
-//                XYChart.Series<String, Double> doubleSeries = new XYChart.Series<String, Double>();
-//                doubleSeries.setName("Output" + output);
-//                seriesFromChart.add(doubleSeries);
-//            }
-//
-//            seriesFromChart.stream().forEach((s) -> {
-//                if (s.getName().equals("Output" + output)) {
-//                    s.getData().add(new Data<>(String.valueOf(time), average));
-//                }
-//            });
-//        }
-//        if (seriesFromChart.size() >= 1) {
-//            System.out.print(series);
-//        }
-//
-//        return seriesFromChart;
-//    }
+    public List<XYChart.Series<String, Double>> getPercentRejectedPacketsLineChart(Switch switchEntity, LineChart<String, Double> lineChart) {
+
+        List<List<Packet>> rejectedPackets = switchEntity.getRejectedPackets();
+        List<List<Packet>> receivedPackets = switchEntity.getReceivedPackets();
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        ObservableList<Data<String, Double>> percentages = FXCollections.observableArrayList();
+
+        Integer time = switchEntity.getTime();
+        ObservableList<XYChart.Series<String, Double>> seriesFromChart = FXCollections.observableArrayList(lineChart.getData());
+
+        int index = 0;
+        for (List<Packet> packets : rejectedPackets) {
+            double numberOfRejectedPackets = packets.size();
+            double sum = numberOfRejectedPackets + receivedPackets.get(index).size();
+            if (sum != 0) {
+                double percentage = numberOfRejectedPackets / sum;
+                percentages.add(new Data<>("Output " + index, percentage * 100.));
+                System.out.println("Output: " + index + ", %: " + percentage);
+
+
+                int finalIndex = index;
+                if (seriesFromChart.stream().filter((s) -> s.getName().equals("Output" + finalIndex)).count() == 0) {
+                    XYChart.Series<String, Double> doubleSeries = new XYChart.Series<String, Double>();
+                    doubleSeries.setName("Output" + index);
+                    seriesFromChart.add(doubleSeries);
+                }
+
+                int finalIndex1 = index;
+                seriesFromChart.stream().forEach((s) -> {
+                    if (s.getName().equals("Output" + finalIndex1)) {
+                        s.getData().add(new Data<>(String.valueOf(time), percentage));
+                    }
+                });
+
+            }
+            index++;
+        }
+
+        if (seriesFromChart.size() >= 1) {
+            System.out.print(seriesFromChart);
+        }
+
+        return seriesFromChart;
+    }
 
     public XYChart.Series<String, Double> getPercentRejectedPacketsForInputs(Switch switchEntity) {
         List<Packet> receivedPackets = switchEntity.getReceivedPackets().stream().flatMap(List::stream).collect(Collectors.toList());

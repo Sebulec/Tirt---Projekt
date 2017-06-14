@@ -70,13 +70,17 @@ public class SwitchLoop {
                 sources = new ArrayList<>();
                 sources.addAll((Collection<? extends IPacketSource>) options.get("sources"));
                 inputQueuesSizes = ((ArrayList<Integer>) options.get("inputQueuesSizes")).stream().mapToInt(i -> i).toArray();
-                outputQueuesSizes = ((ArrayList<Integer>) options.get("outputQueuesSizes")).stream().mapToInt(i -> i).toArray();
-                int[][] multiDimensionalQueuesSizes = new int[inputQueuesSizes.length][outputQueuesSizes.length];
-                for (int i = 0; i < inputQueuesSizes.length; i++) {
-                    multiDimensionalQueuesSizes[i] = outputQueuesSizes;
-                }
                 destinations = new ArrayList<>();
                 destinations.addAll((Collection<? extends APacketDestination>) options.get("destinations"));
+                int[][] multiDimensionalQueuesSizes = new int[sources.size()][destinations.size()];
+                for (int i = 0; i < sources.size(); i++)
+                {
+                    for(int j = 0; j < destinations.size(); j++)
+                    {
+                        multiDimensionalQueuesSizes[i][j] = inputQueuesSizes[i];
+                    }
+
+                }
                 this.switchEntity = new Switch(cellSize, sources, multiDimensionalQueuesSizes, destinations);
                 this.switchEntity.setScheduler(new ISLIPScheduler(sources.size(), destinations.size())); // to do
                 break;

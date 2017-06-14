@@ -300,28 +300,42 @@ public class FXMLDocumentController implements Initializable {
     public void configureCharts() {
         barChart1.getData().removeAll(barChart1.getData());
         barChart1.getXAxis().setLabel("Rozmiar pakietu");
-        barChart1.getYAxis().setLabel("Wartość[%]");
+        barChart1.getYAxis().setLabel("Wartosc[%]");
         barChart1.animatedProperty().set(false);
 
         lineChart1.getData().removeAll(lineChart1.getData());
-        lineChart1.setTitle("Wykres liniowy");
+        lineChart1.setTitle("Procent odrzucen ze względu na rozmiar pakietu");
         lineChart1.getXAxis().setLabel("Czas");
-        lineChart1.getYAxis().setLabel("Procent odrzucen ze względu na rozmiar pakietu");
+        lineChart1.getYAxis().setLabel("Procent odrzucen");
         lineChart1.setCreateSymbols(false);
         lineChart1.legendVisibleProperty().set(true);
         lineChart1.animatedProperty().set(false);
 
         barChart2.getData().removeAll(barChart2.getData());
-        barChart2.setTitle("Srednie opoznienie ze wzgledu na rozmiar pakietu");
-        barChart2.getXAxis().setLabel("Rozmiar pakietu");
-        barChart2.getYAxis().setLabel("Wartość opóźnienia");
+        barChart2.getXAxis().setLabel("Port wyjściowy");
+        barChart2.getYAxis().setLabel("Procent odrzucen");
         barChart2.animatedProperty().set(false);
 
+        lineChart2.getData().removeAll(lineChart2.getData());
+        lineChart2.setTitle("Procent odrzucen ze względu na rozmiar pakietu");
+        lineChart2.getXAxis().setLabel("Czas");
+        lineChart2.getYAxis().setLabel("Procent odrzucen");
+        lineChart2.setCreateSymbols(false);
+        lineChart2.legendVisibleProperty().set(true);
+        lineChart2.animatedProperty().set(false);
+
         barChart3.getData().removeAll(barChart3.getData());
-        barChart3.setTitle("Srednie opoznienie ze wzgledu na port wejsciowy");
         barChart3.getXAxis().setLabel("Port wejsciowy");
-        barChart3.getYAxis().setLabel("Wartosc opoznienia");
+        barChart3.getYAxis().setLabel("Procent opoznienia");
         barChart3.animatedProperty().set(false);
+
+        lineChart3.getData().removeAll(lineChart3.getData());
+        lineChart3.setTitle("Srednie opoznienie ze wzgledu na port wejsciowy");
+        lineChart3.getXAxis().setLabel("Czas");
+        lineChart3.getYAxis().setLabel("Wartosc opoznienia");
+        lineChart3.setCreateSymbols(false);
+        lineChart3.legendVisibleProperty().set(true);
+        lineChart3.animatedProperty().set(false);
 
         barChart5.getData().removeAll(barChart3.getData());
         barChart5.getXAxis().setLabel("Port wyjsciowy");
@@ -337,7 +351,7 @@ public class FXMLDocumentController implements Initializable {
 
         barChart4.getData().removeAll(barChart4.getData());
         barChart4.getXAxis().setLabel("Port wyjsciowy");
-        barChart4.getYAxis().setLabel("Wartosc[%]");
+        barChart4.getYAxis().setLabel("Rozmiar pakietu");
         barChart4.animatedProperty().set(false);
 
         lineChart5.getData().removeAll(lineChart5.getData());
@@ -376,8 +390,7 @@ public class FXMLDocumentController implements Initializable {
         // bar chart percent rejected packets for outputs
         barChart4.getData().removeAll(barChart4.getData());
         barChart4.getData().addAll(stats.getPercentRejectedPackets(this.switchLoop.switchEntity));
-        // todo
-//        lineChart2.getData().setAll(stats.getPercentRejectedPacketsLineChart(this.switchLoop.switchEntity, lineChart2));
+        lineChart2.getData().setAll(stats.getPercentRejectedPacketsLineChart(this.switchLoop.switchEntity, lineChart2));
 
         // bar chart percent rejected packets for inputs 
         barChart6.getData().removeAll(barChart6.getData());

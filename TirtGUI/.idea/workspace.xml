@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87564986-3980-409d-947f-b247b4c846af" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tirtgui/FXMLDocument.fxml" afterPath="$PROJECT_DIR$/src/tirtgui/FXMLDocument.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java" afterPath="$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tirtgui/Stats.java" afterPath="$PROJECT_DIR$/src/tirtgui/Stats.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tirtgui/SwitchLoop.java" afterPath="$PROJECT_DIR$/src/tirtgui/SwitchLoop.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,20 +35,36 @@
       <file leaf-file-name="Stats.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tirtgui/Stats.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="240" column="18" lean-forward="true" selection-start-line="240" selection-start-column="18" selection-end-line="240" selection-end-column="18" />
+            <state relative-caret-position="1245">
+              <caret line="279" column="46" lean-forward="false" selection-start-line="279" selection-start-column="46" selection-end-line="279" selection-end-column="46" />
               <folding>
-                <marker date="1497424367000" expanded="false" signature="13752:13768" ph="&lt;~&gt;" />
+                <element signature="method#getPercentRejectedPackets#0;class#Stats#0" expanded="false" />
+                <element signature="method#getPercentRejectedPacketsLineChart#0;class#Stats#0" expanded="false" />
+                <element signature="method#getAverageDelayForOutput#0;class#Stats#0" expanded="false" />
+                <element signature="method#getAverageDelayForInputs#0;class#Stats#0" expanded="false" />
+                <element signature="method#getAverageDelayForInputsLineChart#0;class#Stats#0" expanded="false" />
+                <element signature="method#getAverageDelayForOutputs#0;class#Stats#0" expanded="false" />
+                <element signature="method#getAverageDelayForOutputsLineChart#0;class#Stats#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FXMLDocumentController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FXMLDocumentController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="264" column="27" lean-forward="false" selection-start-line="264" selection-start-column="27" selection-end-line="264" selection-end-column="27" />
+            <state relative-caret-position="607">
+              <caret line="168" column="23" lean-forward="false" selection-start-line="168" selection-start-column="23" selection-end-line="168" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SwitchLoop.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tirtgui/SwitchLoop.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="386">
+              <caret line="67" column="22" lean-forward="true" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -137,6 +153,8 @@
       <find>configureCharts</find>
       <find>numberOfIterationsLabel</find>
       <find>switchTypeCombo</find>
+      <find>getPercentRejectedPacketsLineChart</find>
+      <find>outId</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -153,6 +171,7 @@
         <option value="$PROJECT_DIR$/src/tirtgui/TirtGUI.java" />
         <option value="$PROJECT_DIR$/src/tirtgui/Stats.java" />
         <option value="$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java" />
+        <option value="$PROJECT_DIR$/src/tirtgui/SwitchLoop.java" />
       </list>
     </option>
   </component>
@@ -529,20 +548,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tirtgui/Stats.java</url>
-          <line>81</line>
-          <properties />
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tirtgui/Stats.java</url>
-          <line>99</line>
-          <properties />
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="29" />
     </breakpoint-manager>
     <watches-manager />
@@ -570,7 +575,13 @@
         <state relative-caret-position="1050">
           <caret line="70" column="5" lean-forward="false" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
           <folding>
-            <marker date="1497424367000" expanded="false" signature="13752:13768" ph="&lt;~&gt;" />
+            <element signature="method#getPercentRejectedPackets#0;class#Stats#0" expanded="false" />
+            <element signature="method#getPercentRejectedPacketsLineChart#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForOutput#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForInputs#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForInputsLineChart#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForOutputs#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForOutputsLineChart#0;class#Stats#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -698,18 +709,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tirtgui/Stats.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="240" column="18" lean-forward="true" selection-start-line="240" selection-start-column="18" selection-end-line="240" selection-end-column="18" />
+        <state relative-caret-position="1245">
+          <caret line="279" column="46" lean-forward="false" selection-start-line="279" selection-start-column="46" selection-end-line="279" selection-end-column="46" />
           <folding>
-            <marker date="1497424367000" expanded="false" signature="13752:13768" ph="&lt;~&gt;" />
+            <element signature="method#getPercentRejectedPackets#0;class#Stats#0" expanded="false" />
+            <element signature="method#getPercentRejectedPacketsLineChart#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForOutput#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForInputs#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForInputsLineChart#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForOutputs#0;class#Stats#0" expanded="false" />
+            <element signature="method#getAverageDelayForOutputsLineChart#0;class#Stats#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="264" column="27" lean-forward="false" selection-start-line="264" selection-start-column="27" selection-end-line="264" selection-end-column="27" />
+        <state relative-caret-position="607">
+          <caret line="168" column="23" lean-forward="false" selection-start-line="168" selection-start-column="23" selection-end-line="168" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tirtgui/SwitchLoop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="67" column="22" lean-forward="true" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
           <folding />
         </state>
       </provider>
