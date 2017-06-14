@@ -59,15 +59,8 @@ public class OutputPort
 		sendPacketFragment();
 		
 		if(packet.inputId == connectedTo)
-		{
-			int receivedBytes = receivePacket(packet, bytes);
-			
-			if(beingReceived == null)
-			{
-				connectedTo = -1;
-			}
-			
-			return receivedBytes;
+		{			
+			return receivePacket(packet, bytes);
 		}
 		
 		return 0;
@@ -98,6 +91,7 @@ public class OutputPort
 		{
 			queue.enqueue(packet);
 			beingReceived = null;
+			connectedTo = -1;
 		}
 		
 		return bytes;
