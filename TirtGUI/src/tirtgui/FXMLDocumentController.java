@@ -303,6 +303,14 @@ public class FXMLDocumentController implements Initializable {
         barChart1.getYAxis().setLabel("Wartość[%]");
         barChart1.animatedProperty().set(false);
 
+        lineChart1.getData().removeAll(lineChart1.getData());
+        lineChart1.setTitle("Wykres liniowy");
+        lineChart1.getXAxis().setLabel("Czas");
+        lineChart1.getYAxis().setLabel("Procent odrzuceń");
+        lineChart1.setCreateSymbols(false);
+        lineChart1.legendVisibleProperty().set(true);
+        lineChart1.animatedProperty().set(false);
+
         barChart2.getData().removeAll(barChart2.getData());
         barChart2.setTitle("Średnie opóźnienie ze względu na rozmiar pakietu");
         barChart2.getXAxis().setLabel("Rozmiar pakietu");
@@ -365,10 +373,14 @@ public class FXMLDocumentController implements Initializable {
         // bar chart percent rejected packets for size
         barChart1.getData().removeAll(barChart1.getData());
         barChart1.getData().addAll(stats.getPercentRejectedPackets(this.switchLoop.switchEntity, outId));
+        // line chart
+        lineChart1.getData().setAll(stats.getPercentRejectedPacketsLineChart(this.switchLoop.switchEntity, lineChart1, outId));
 
         // bar chart percent rejected packets for outputs
         barChart4.getData().removeAll(barChart4.getData());
         barChart4.getData().addAll(stats.getPercentRejectedPackets(this.switchLoop.switchEntity));
+
+//        lineChart2.getData().setAll(stats.getPercentRejectedPacketsLineChart(this.switchLoop.switchEntity, lineChart2))
 
         // bar chart percent rejected packets for inputs 
         barChart6.getData().removeAll(barChart6.getData());
