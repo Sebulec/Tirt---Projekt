@@ -118,6 +118,46 @@ public class Stats {
         return series1;
     }
 
+    public List<XYChart.Series<String, Double>> getAverageDelayForOutputLineChart(Switch switchEntity, LineChart<String, Double> lineChart, int outId) {
+        List<XYChart.Series<String, Double>> series = new ArrayList<>();
+        if (outId < 0) {
+            return series;
+        }
+        HashSet<Integer> inputs = new HashSet<>();
+        List<Packet> receivedPackets = switchEntity.getReceivedPackets().stream().flatMap(List::stream).collect(Collectors.toList());
+
+        ObservableList<XYChart.Series<String, Double>> seriesFromChart = FXCollections.observableArrayList(lineChart.getData());
+
+        inputs.addAll(receivedPackets.stream().mapToInt(Packet::getInputId).boxed().collect(Collectors.toList()));
+        Integer time = switchEntity.getTime();
+
+        ObservableList<Data<String, Double>> averages = FXCollections.observableArrayList();
+        List<Packet> receivedPacketsForOutput = switchEntity.getReceivedPackets().get(outId);
+        HashSet<Integer> packetsSizes = new HashSet<>();
+        packetsSizes.addAll(Arrays.asList(receivedPacketsForOutput.stream().map((packet) -> packet.size).toArray(Integer[]::new)));
+        receivedPacketsForOutput.sort((Packet o1, Packet o2) -> Integer.compare(o1.size, o2.size));
+
+        for (Integer packetSize : packetsSizes) {
+            double average = receivedPacketsForOutput.stream().filter((packet) -> packet.size == packetSize).mapToInt(Packet::getDelay).average().getAsDouble();
+
+            if (seriesFromChart.stream().filter((s) -> s.getName().equals("Size" + packetSize)).count() == 0) {
+                XYChart.Series<String, Double> doubleSeries = new XYChart.Series<String, Double>();
+                doubleSeries.setName("Size" + packetSize);
+                seriesFromChart.add(doubleSeries);
+            }
+
+            seriesFromChart.stream().forEach((s) -> {
+                if (s.getName().equals("Size" + packetSize)) {
+                    s.getData().add(new Data<>(String.valueOf(time), average));
+                }
+            });
+        }
+
+        System.out.print(series);
+
+        return seriesFromChart;
+    }
+
     public XYChart.Series<String, Double> getAverageDelayForInputs(Switch switchEntity) {
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
         HashSet<Integer> inputs = new HashSet<>();

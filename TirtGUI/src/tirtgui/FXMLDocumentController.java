@@ -353,6 +353,7 @@ public class FXMLDocumentController implements Initializable {
         lineChart4.getYAxis().setLabel("Wartosc opoznienia");
         lineChart4.setCreateSymbols(false);
         lineChart4.legendVisibleProperty().set(true);
+        lineChart4.animatedProperty().set(false);
 
         lineChart5.getData().removeAll(lineChart5.getData());
         lineChart5.setTitle("Procent odrzucen ze wzgledu na port wyjsciowy");
@@ -402,7 +403,7 @@ public class FXMLDocumentController implements Initializable {
         barChart2.getData().removeAll(barChart2.getData());
         barChart2.getData().addAll(stats.getAverageDelayForOutput(this.switchLoop.switchEntity, outId));
         // line chart average delay for size
-        lineChart4.getData().setAll()
+        lineChart4.getData().setAll(stats.getAverageDelayForOutputLineChart(this.switchLoop.switchEntity, lineChart4, outId));
 
         // bar chart average delat for input
         barChart3.getData().removeAll(barChart3.getData());

@@ -34,18 +34,18 @@
       <file leaf-file-name="Stats.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tirtgui/Stats.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="908">
-              <caret line="343" column="49" lean-forward="false" selection-start-line="343" selection-start-column="49" selection-end-line="343" selection-end-column="49" />
+            <state relative-caret-position="153">
+              <caret line="120" column="81" lean-forward="false" selection-start-line="120" selection-start-column="48" selection-end-line="120" selection-end-column="81" />
               <folding>
                 <element signature="method#getPercentRejectedPackets#0;class#Stats#0" expanded="false" />
                 <element signature="method#getPercentRejectedPacketsLineChart#0;class#Stats#0" expanded="false" />
-                <element signature="method#getAverageDelayForOutput#0;class#Stats#0" expanded="false" />
                 <element signature="method#getAverageDelayForInputs#0;class#Stats#0" expanded="false" />
-                <element signature="method#getAverageDelayForInputsLineChart#0;class#Stats#0" expanded="false" />
                 <element signature="method#getAverageDelayForOutputs#0;class#Stats#0" expanded="false" />
                 <element signature="method#getAverageDelayForOutputsLineChart#0;class#Stats#0" expanded="false" />
                 <element signature="method#getPercentRejectedPackets#1;class#Stats#0" expanded="false" />
                 <element signature="method#getPercentRejectedPacketsLineChart#1;class#Stats#0" expanded="false" />
+                <element signature="method#getPercentRejectedPacketsForInputs#0;class#Stats#0" expanded="false" />
+                <element signature="method#getPercentRejectedPacketsForInputsLineChart#0;class#Stats#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -54,8 +54,8 @@
       <file leaf-file-name="FXMLDocumentController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="360" column="43" lean-forward="true" selection-start-line="360" selection-start-column="43" selection-end-line="360" selection-end-column="43" />
+            <state relative-caret-position="375">
+              <caret line="370" column="61" lean-forward="true" selection-start-line="370" selection-start-column="61" selection-end-line="370" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -157,6 +157,7 @@
       <find>getPercentRejectedPacketsLineChart</find>
       <find>outId</find>
       <find>barChart4</find>
+      <find>getAverageDelayForOutput</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -550,7 +551,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="29" />
+      <option name="time" value="30" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -579,13 +580,13 @@
           <folding>
             <element signature="method#getPercentRejectedPackets#0;class#Stats#0" expanded="false" />
             <element signature="method#getPercentRejectedPacketsLineChart#0;class#Stats#0" expanded="false" />
-            <element signature="method#getAverageDelayForOutput#0;class#Stats#0" expanded="false" />
             <element signature="method#getAverageDelayForInputs#0;class#Stats#0" expanded="false" />
-            <element signature="method#getAverageDelayForInputsLineChart#0;class#Stats#0" expanded="false" />
             <element signature="method#getAverageDelayForOutputs#0;class#Stats#0" expanded="false" />
             <element signature="method#getAverageDelayForOutputsLineChart#0;class#Stats#0" expanded="false" />
             <element signature="method#getPercentRejectedPackets#1;class#Stats#0" expanded="false" />
             <element signature="method#getPercentRejectedPacketsLineChart#1;class#Stats#0" expanded="false" />
+            <element signature="method#getPercentRejectedPacketsForInputs#0;class#Stats#0" expanded="false" />
+            <element signature="method#getPercentRejectedPacketsForInputsLineChart#0;class#Stats#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -721,26 +722,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tirtgui/Stats.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="908">
-          <caret line="343" column="49" lean-forward="false" selection-start-line="343" selection-start-column="49" selection-end-line="343" selection-end-column="49" />
+        <state relative-caret-position="153">
+          <caret line="120" column="81" lean-forward="false" selection-start-line="120" selection-start-column="48" selection-end-line="120" selection-end-column="81" />
           <folding>
             <element signature="method#getPercentRejectedPackets#0;class#Stats#0" expanded="false" />
             <element signature="method#getPercentRejectedPacketsLineChart#0;class#Stats#0" expanded="false" />
-            <element signature="method#getAverageDelayForOutput#0;class#Stats#0" expanded="false" />
             <element signature="method#getAverageDelayForInputs#0;class#Stats#0" expanded="false" />
-            <element signature="method#getAverageDelayForInputsLineChart#0;class#Stats#0" expanded="false" />
             <element signature="method#getAverageDelayForOutputs#0;class#Stats#0" expanded="false" />
             <element signature="method#getAverageDelayForOutputsLineChart#0;class#Stats#0" expanded="false" />
             <element signature="method#getPercentRejectedPackets#1;class#Stats#0" expanded="false" />
             <element signature="method#getPercentRejectedPacketsLineChart#1;class#Stats#0" expanded="false" />
+            <element signature="method#getPercentRejectedPacketsForInputs#0;class#Stats#0" expanded="false" />
+            <element signature="method#getPercentRejectedPacketsForInputsLineChart#0;class#Stats#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="360" column="43" lean-forward="true" selection-start-line="360" selection-start-column="43" selection-end-line="360" selection-end-column="43" />
+        <state relative-caret-position="375">
+          <caret line="370" column="61" lean-forward="true" selection-start-line="370" selection-start-column="61" selection-end-line="370" selection-end-column="61" />
           <folding />
         </state>
       </provider>
