@@ -325,8 +325,8 @@ public class FXMLDocumentController implements Initializable {
         lineChart2.animatedProperty().set(false);
 
         barChart2.getData().removeAll(barChart2.getData());
-        barChart2.getXAxis().setLabel("Port wyjściowy");
-        barChart2.getYAxis().setLabel("Procent odrzucen");
+        barChart2.getXAxis().setLabel("Rozmiar pakietu");
+        barChart2.getYAxis().setLabel("Wartosc opoznienia");
         barChart2.animatedProperty().set(false);
 
         barChart3.getData().removeAll(barChart3.getData());
@@ -335,20 +335,20 @@ public class FXMLDocumentController implements Initializable {
         barChart3.animatedProperty().set(false);
 
         lineChart3.getData().removeAll(lineChart3.getData());
-        lineChart3.setTitle("Srednie opoznienie ze wzgledu na port wejsciowy");
+        lineChart3.setTitle("Procent odrzucen ze wzgledu na port wejsciowy");
         lineChart3.getXAxis().setLabel("Czas");
-        lineChart3.getYAxis().setLabel("Wartosc opoznienia");
+        lineChart3.getYAxis().setLabel("Procent odrzucen");
         lineChart3.setCreateSymbols(false);
         lineChart3.legendVisibleProperty().set(true);
         lineChart3.animatedProperty().set(false);
 
         barChart5.getData().removeAll(barChart3.getData());
         barChart5.getXAxis().setLabel("Port wyjsciowy");
-        barChart5.getYAxis().setLabel("Procent odrzuceń");
+        barChart5.getYAxis().setLabel("Wartosc opoznienia");
         barChart5.animatedProperty().set(false);
 
         lineChart4.getData().removeAll(lineChart4.getData());
-        lineChart4.setTitle("Srednie opoznienie ze wzgledu na port wyjsciowy");
+        lineChart4.setTitle("Srednie opoznienie ze wzgledu na rozmiar pakietu");
         lineChart4.getXAxis().setLabel("Czas");
         lineChart4.getYAxis().setLabel("Wartosc opoznienia");
         lineChart4.setCreateSymbols(false);
@@ -356,9 +356,9 @@ public class FXMLDocumentController implements Initializable {
         lineChart4.animatedProperty().set(false);
 
         lineChart5.getData().removeAll(lineChart5.getData());
-        lineChart5.setTitle("Procent odrzucen ze wzgledu na port wejsciowy");
+        lineChart5.setTitle("Srednie opoznienie ze wzgledu na port wejsciowy");
         lineChart5.getXAxis().setLabel("Czas");
-        lineChart5.getYAxis().setLabel("Procent odrzucen");
+        lineChart5.getYAxis().setLabel("Wartosc opoznienia");
         lineChart5.setCreateSymbols(false);
         lineChart5.legendVisibleProperty().set(true);
         lineChart5.animatedProperty().set(false);
@@ -369,9 +369,9 @@ public class FXMLDocumentController implements Initializable {
         barChart6.animatedProperty().set(false);
 
         lineChart6.getData().removeAll(lineChart6.getData());
-        lineChart6.setTitle("Procent odrzucen ze wzgledu na port wyjsciowy");
+        lineChart6.setTitle("Srednie opoznienie ze wzgledu na port wyjsciowy");
         lineChart6.getXAxis().setLabel("Czas");
-        lineChart6.getYAxis().setLabel("Procent odrzucen");
+        lineChart6.getYAxis().setLabel("Wartosc opoznienia");
         lineChart6.setCreateSymbols(false);
         lineChart6.legendVisibleProperty().set(true);
         lineChart6.animatedProperty().set(false);
