@@ -331,7 +331,7 @@ public class FXMLDocumentController implements Initializable {
 
         barChart3.getData().removeAll(barChart3.getData());
         barChart3.getXAxis().setLabel("Port wejsciowy");
-        barChart3.getYAxis().setLabel("Procent opoznienia");
+        barChart3.getYAxis().setLabel("Wartosc opoznienia");
         barChart3.animatedProperty().set(false);
 
         lineChart3.getData().removeAll(lineChart3.getData());

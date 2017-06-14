@@ -38,8 +38,8 @@
       <file leaf-file-name="FXMLDocumentController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="337" column="28" lean-forward="false" selection-start-line="337" selection-start-column="28" selection-end-line="337" selection-end-column="28" />
+            <state relative-caret-position="291">
+              <caret line="358" column="46" lean-forward="true" selection-start-line="358" selection-start-column="46" selection-end-line="358" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -714,8 +714,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="337" column="28" lean-forward="false" selection-start-line="337" selection-start-column="28" selection-end-line="337" selection-end-column="28" />
+        <state relative-caret-position="291">
+          <caret line="358" column="46" lean-forward="true" selection-start-line="358" selection-start-column="46" selection-end-line="358" selection-end-column="46" />
           <folding />
         </state>
       </provider>
