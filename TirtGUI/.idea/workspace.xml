@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="87564986-3980-409d-947f-b247b4c846af" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java" afterPath="$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tirtgui/Stats.java" afterPath="$PROJECT_DIR$/src/tirtgui/Stats.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,8 +53,8 @@
       <file leaf-file-name="FXMLDocumentController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="370" column="61" lean-forward="true" selection-start-line="370" selection-start-column="61" selection-end-line="370" selection-end-column="61" />
+            <state relative-caret-position="390">
+              <caret line="371" column="67" lean-forward="false" selection-start-line="371" selection-start-column="67" selection-end-line="371" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -740,8 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tirtgui/FXMLDocumentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="370" column="61" lean-forward="true" selection-start-line="370" selection-start-column="61" selection-end-line="370" selection-end-column="61" />
+        <state relative-caret-position="390">
+          <caret line="371" column="67" lean-forward="false" selection-start-line="371" selection-start-column="67" selection-end-line="371" selection-end-column="67" />
           <folding />
         </state>
       </provider>

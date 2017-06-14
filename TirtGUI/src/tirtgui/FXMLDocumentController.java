@@ -356,7 +356,7 @@ public class FXMLDocumentController implements Initializable {
         lineChart4.animatedProperty().set(false);
 
         lineChart5.getData().removeAll(lineChart5.getData());
-        lineChart5.setTitle("Procent odrzucen ze wzgledu na port wyjsciowy");
+        lineChart5.setTitle("Procent odrzucen ze wzgledu na port wejsciowy");
         lineChart5.getXAxis().setLabel("Czas");
         lineChart5.getYAxis().setLabel("Procent odrzucen");
         lineChart5.setCreateSymbols(false);
@@ -369,7 +369,7 @@ public class FXMLDocumentController implements Initializable {
         barChart6.animatedProperty().set(false);
 
         lineChart6.getData().removeAll(lineChart6.getData());
-        lineChart6.setTitle("Procent odrzucen ze wzgledu na port wejsciowy");
+        lineChart6.setTitle("Procent odrzucen ze wzgledu na port wyjsciowy");
         lineChart6.getXAxis().setLabel("Czas");
         lineChart6.getYAxis().setLabel("Procent odrzucen");
         lineChart6.setCreateSymbols(false);
