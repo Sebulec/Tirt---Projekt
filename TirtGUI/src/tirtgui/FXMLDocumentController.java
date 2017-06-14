@@ -264,7 +264,7 @@ public class FXMLDocumentController implements Initializable {
                 break;
             case VirtualOutputQueueing:
                 this.inputQueueSizeSpinner.setDisable(false);
-                this.outputQueueSizeSpinner.setDisable(false);
+                this.outputQueueSizeSpinner.setDisable(true);
                 break;
         }
     }
@@ -304,7 +304,7 @@ public class FXMLDocumentController implements Initializable {
         barChart1.animatedProperty().set(false);
 
         lineChart1.getData().removeAll(lineChart1.getData());
-        lineChart1.setTitle("Procent odrzucen ze względu na rozmiar pakietu");
+        lineChart1.setTitle("Procent odrzucen ze wzgledu na rozmiar pakietu");
         lineChart1.getXAxis().setLabel("Czas");
         lineChart1.getYAxis().setLabel("Procent odrzucen");
         lineChart1.setCreateSymbols(false);
@@ -317,7 +317,7 @@ public class FXMLDocumentController implements Initializable {
         barChart4.animatedProperty().set(false);
 
         lineChart2.getData().removeAll(lineChart2.getData());
-        lineChart2.setTitle("Procent odrzucen ze względu na port wyjsciowy");
+        lineChart2.setTitle("Procent odrzucen ze wzgledu na port wyjsciowy");
         lineChart2.getXAxis().setLabel("Czas");
         lineChart2.getYAxis().setLabel("Procent odrzucen");
         lineChart2.setCreateSymbols(false);
@@ -354,10 +354,8 @@ public class FXMLDocumentController implements Initializable {
         lineChart4.setCreateSymbols(false);
         lineChart4.legendVisibleProperty().set(true);
 
-
-
         lineChart5.getData().removeAll(lineChart5.getData());
-        lineChart5.setTitle("Procent odrzucen ze względu na port wyjsciowy");
+        lineChart5.setTitle("Procent odrzucen ze wzgledu na port wyjsciowy");
         lineChart5.getXAxis().setLabel("Czas");
         lineChart5.getYAxis().setLabel("Procent odrzucen");
         lineChart5.setCreateSymbols(false);
@@ -397,11 +395,14 @@ public class FXMLDocumentController implements Initializable {
         // bar chart percent rejected packets for inputs 
         barChart6.getData().removeAll(barChart6.getData());
         barChart6.getData().addAll(stats.getPercentRejectedPacketsForInputs(this.switchLoop.switchEntity));
+        // line chart
+        lineChart3.getData().setAll(stats.getPercentRejectedPacketsForInputsLineChart(this.switchLoop.switchEntity, lineChart3));
 
         // bar chart average delay for size
         barChart2.getData().removeAll(barChart2.getData());
         barChart2.getData().addAll(stats.getAverageDelayForOutput(this.switchLoop.switchEntity, outId));
         // line chart average delay for size
+        lineChart4.getData().setAll()
 
         // bar chart average delat for input
         barChart3.getData().removeAll(barChart3.getData());

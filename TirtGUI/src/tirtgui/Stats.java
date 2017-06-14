@@ -308,4 +308,54 @@ public class Stats {
         series1.setData(percentages);
         return series1;
     }
+
+    public List<XYChart.Series<String, Double>> getPercentRejectedPacketsForInputsLineChart(Switch switchEntity, LineChart<String, Double> lineChart) {
+        List<Packet> receivedPackets = switchEntity.getReceivedPackets().stream().flatMap(List::stream).collect(Collectors.toList());
+        List<Packet> rejectedPackets = switchEntity.getRejectedPackets().stream().flatMap(List::stream).collect(Collectors.toList());
+
+        HashSet<Integer> inputs = new HashSet();
+        inputs.addAll(receivedPackets.stream().mapToInt(Packet::getInputId).boxed().collect(Collectors.toList()));
+        inputs.addAll(rejectedPackets.stream().mapToInt(Packet::getInputId).boxed().collect(Collectors.toList()));
+
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        ObservableList<Data<String, Double>> percentages = FXCollections.observableArrayList();
+        int index = 0;
+
+        Integer time = switchEntity.getTime();
+        ObservableList<XYChart.Series<String, Double>> seriesFromChart = FXCollections.observableArrayList(lineChart.getData());
+
+        for (Integer input : inputs) {
+            double numberOfRejectedPackets = rejectedPackets.stream().filter((packet) -> packet.getInputId() == input).count();
+            double sum = numberOfRejectedPackets + receivedPackets.stream().filter((packet) -> packet.getInputId() == input).count();
+            if (sum != 0) {
+                double percentage = numberOfRejectedPackets / sum;
+                percentages.add(new Data<>("Input " + index, percentage * 100.));
+                System.out.println("Input: " + index + "perctange: " + percentage);
+
+                int finalIndex = index;
+                if (seriesFromChart.stream().filter((s) -> s.getName().equals("Input" + finalIndex)).count() == 0) {
+                    XYChart.Series<String, Double> doubleSeries = new XYChart.Series<String, Double>();
+                    doubleSeries.setName("Input" + index);
+                    seriesFromChart.add(doubleSeries);
+                }
+
+                int finalIndex1 = index;
+                seriesFromChart.stream().forEach((s) -> {
+                    if (s.getName().equals("Input" + finalIndex1)) {
+                        s.getData().add(new Data<>(String.valueOf(time), percentage));
+                    }
+                });
+
+            }
+            index++;
+        }
+
+
+
+        if (seriesFromChart.size() >= 1) {
+            System.out.print(seriesFromChart);
+        }
+
+        return seriesFromChart;
+    }
 }
